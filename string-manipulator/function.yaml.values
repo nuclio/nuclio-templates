@@ -1,6 +1,6 @@
 manipulationKind:
   displayName: Manipulation Kind
-  kind: string
+  kind: choice
   description: "What do to with the incoming request body"
   required: true
   attributes:
