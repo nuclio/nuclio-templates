@@ -1,0 +1,18 @@
+manipulationKind:
+  displayName: Manipulation Kind
+  kind: string
+  description: "What do to with the incoming request body"
+  required: true
+  attributes:
+    choices: [echo, reverser, md5]
+    defaultValue: echo
+
+maxWorkers:
+  displayName: Number of workers
+  kind: number
+  description: "Number of requests to handle concurrently"
+  required: true
+  attributes:
+    defaultValue: 4
+    minValue: 1
+    maxValue: 10

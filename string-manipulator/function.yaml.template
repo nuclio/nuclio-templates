@@ -1,0 +1,13 @@
+metadata:
+  name: string-manipulator
+spec:
+  description: "Manipulates the event body, according to configured manipulation"
+  env:
+    - name: MANIPULATION_KIND
+      value: {{ .manipulationKind }}
+  handler: "main:handler"
+  runtime: "python:3.6"
+  triggers:
+    myHttpTrigger:
+      kind: http
+      maxWorkers: {{ .maxWorkers }}
