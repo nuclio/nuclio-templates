@@ -1,6 +1,8 @@
 metadata:
   name: string-manipulator
 spec:
+  build:
+    functionSourceCode: {{ .SourceCode }}
   description: "Manipulates the event body, according to configured manipulation"
   env:
     - name: MANIPULATION_KIND
