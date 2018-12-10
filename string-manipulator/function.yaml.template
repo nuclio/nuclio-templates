@@ -9,6 +9,8 @@ spec:
       value: {{ .manipulationKind }}
   handler: "main:handler"
   runtime: "python:3.6"
+  minReplicas: 1
+  maxReplicas: 1
   triggers:
     myHttpTrigger:
       kind: http
