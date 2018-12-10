@@ -4,7 +4,7 @@ manipulationKind:
   description: "What do to with the incoming request body"
   required: true
   attributes:
-    choices: [echo, reverser, md5]
+    choices: [echo, reverse, md5]
     defaultValue: echo
 
 maxWorkers:
