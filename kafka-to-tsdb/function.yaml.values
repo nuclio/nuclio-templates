@@ -1,0 +1,32 @@
+initialOffset:
+  displayName: Initial Offset
+  kind: choice
+  description: "Kafka initial offset"
+  required: true
+  attributes:
+    choices: [Earliest, Latest]
+    defaultValue: Latest
+
+consumerGroup:
+  displayName: Consumer group
+  kind: string
+  description: "Kafka consumer group name"
+  required: false
+
+workerAllocatorName:
+  displayName: Worker allocator name
+  kind: string
+  description: "Kafka worker allocator name"
+  required: false
+
+topic:
+  displayName: Topic
+  kind: string
+  description: "Kafka topic name"
+  required: true
+
+broker:
+  displayName: Broker
+  kind: string
+  description: "Kafka broker address"
+  required: true

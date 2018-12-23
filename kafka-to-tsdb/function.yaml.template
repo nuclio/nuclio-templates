@@ -1,0 +1,21 @@
+metadata:
+  name: kafka-to-tsdb
+spec:
+  build:
+    functionSourceCode: {{ .SourceCode }}
+  description: "Listens on given kafka topics and ingests given events to TSDB"
+  handler: "main:handler"
+  runtime: "python:3.6"
+  minReplicas: 1
+  maxReplicas: 1
+  triggers:
+    kafkaTrigger:
+      kind: kafka-cluster
+      workerAllocatorName: {{ .workerAllocatorName }}
+      attributes:
+        consumerGroup: {{ .consumerGroup }}
+        initialOffset: {{ .initialOffset }}
+        topics: 
+        - {{ .topic }}
+        brokers:
+        - {{ .broker }}
