@@ -1,4 +1,4 @@
-initialOffset:
+InitialOffset:
   displayName: Initial Offset
   kind: choice
   description: "Kafka initial offset"
@@ -7,26 +7,28 @@ initialOffset:
     choices: [Earliest, Latest]
     defaultValue: Latest
 
-consumerGroup:
+ConsumerGroup:
   displayName: Consumer group
   kind: string
   description: "Kafka consumer group name"
   required: false
 
-workerAllocatorName:
-  displayName: Worker allocator name
-  kind: string
-  description: "Kafka worker allocator name"
-  required: false
-
-topic:
+Topic:
   displayName: Topic
   kind: string
   description: "Kafka topic name"
   required: true
 
-broker:
+Broker:
   displayName: Broker
   kind: string
   description: "Kafka broker address"
   required: true
+
+InjestFunction:
+  displayName: InjestFunction
+  kind: string
+  description: "Injest function name. (e.g. default-tenant-tsdb-nuclio-ingest)"
+  required: true
+  attributes:
+    defaultValue: default-tenant-tsdb-nuclio-ingest

@@ -6,16 +6,18 @@ spec:
   description: "Listens on given kafka topics and ingests given events to TSDB"
   handler: "main:handler"
   runtime: "python:3.6"
+  env:
+  - name: INJEST_FUNCTION
+    value: {{ .InjestFunction }}
   minReplicas: 1
   maxReplicas: 1
   triggers:
     kafkaTrigger:
       kind: kafka-cluster
-      workerAllocatorName: {{ .workerAllocatorName }}
       attributes:
-        consumerGroup: {{ .consumerGroup }}
-        initialOffset: {{ .initialOffset }}
+        consumerGroup: {{ .ConsumerGroup }}
+        initialOffset: {{ .InitialOffset }}
         topics: 
-        - {{ .topic }}
+        - {{ .Topic }}
         brokers:
-        - {{ .broker }}
+        - {{ .Broker }}
