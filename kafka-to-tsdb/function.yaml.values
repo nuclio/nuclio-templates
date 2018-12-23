@@ -26,9 +26,9 @@ Broker:
   required: true
 
 InjestFunction:
-  displayName: InjestFunction
+  displayName: Injest Function (e.g. default-tenant-tsdb-nuclio-ingest)
   kind: string
-  description: "Injest function name. (e.g. default-tenant-tsdb-nuclio-ingest)"
+  description: "Injest function name"
   required: true
   attributes:
     defaultValue: default-tenant-tsdb-nuclio-ingest
