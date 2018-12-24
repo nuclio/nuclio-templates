@@ -17,10 +17,10 @@ import json
 
 
 def handler(context, event):
-    injest_function = os.environ['INJEST_FUNCTION']
+    ingest_function = os.environ['INGEST_FUNCTION']
 
     # parse the given event body
     event_body = json.loads(event.body)
 
     # ingest the parsed event to tsdb
-    context.platform.call_function(injest_function, nuclio_sdk.Event(body=event_body))
+    context.platform.call_function(ingest_function, nuclio_sdk.Event(body=event_body))
