@@ -5,7 +5,7 @@ InitialOffset:
   required: true
   attributes:
     choices: [earliest, latest]
-    defaultValue: Latest
+    defaultValue: latest
 
 ConsumerGroup:
   displayName: Consumer group
