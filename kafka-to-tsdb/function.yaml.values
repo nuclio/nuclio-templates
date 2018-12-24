@@ -25,10 +25,10 @@ Broker:
   description: "Kafka broker address"
   required: true
 
-InjestFunction:
-  displayName: Injest Function (e.g. default-tenant-tsdb-nuclio-ingest)
+IngestFunction:
+  displayName: Ingest Function (e.g. default-tenant-tsdb-nuclio-ingest)
   kind: string
-  description: "Injest function name"
+  description: "Ingest function name"
   required: true
   attributes:
     defaultValue: default-tenant-tsdb-nuclio-ingest

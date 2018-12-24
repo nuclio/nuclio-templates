@@ -7,8 +7,8 @@ spec:
   handler: "main:handler"
   runtime: "python:3.6"
   env:
-  - name: INJEST_FUNCTION
-    value: {{ .InjestFunction }}
+  - name: INGEST_FUNCTION
+    value: {{ .IngestFunction }}
   minReplicas: 1
   maxReplicas: 1
   triggers:
