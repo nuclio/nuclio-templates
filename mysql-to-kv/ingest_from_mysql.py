@@ -12,90 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import os
 import pymysql
-import requests
-import json
 import pandas as pd
-from requests.auth import HTTPBasicAuth
-
-
-def _pack_putitem_body(key, row):
-    """
-    PutItem request body formater
-    """
-    dict_item = dict()
-    for k, v in row.iteritems():
-        dict_item[k] = {'N' if isinstance(v, int) else 'S': '{}'.format(v)}
-    body = {
-            "Key": {
-                "ID": {
-                    "N": '{}'.format(key)
-                }
-            },
-            "Item": dict_item
-        }
-    return body
-
-
-def _putitem(url, body, user, password):
-    """
-    PutItem request
-    """
-    headers = {'Content-Type': 'application/json', 'X-v3io-function': 'PutItem'}
-    res = requests.post(url=url, data=json.dumps(body), headers=headers, auth=HTTPBasicAuth(user, password))
-    return res
-
+import v3io_frames as v3f
 
 def handler(context, event):
-    #################
-    # IGZ variables #
-    #################
-    # table
-    table = os.getenv('TABLE', 'table')
-    # bigdata
-    container = os.getenv('CONTAINER', 'bigdata')
-    # iguazio user
-    igz_user = os.getenv('IGZ_USER', 'iguazio')
-    # iguazio password
-    igz_password = os.getenv('IGZ_PWD', 'dIusluqnAoJl5wNV')
+    df = pd.read_sql_query('select rfam_acc,rfam_id,auto_wiki FROM family LIMIT 10', context.dbconn)
+    context.client.write(backend='kv', table=os.getenv('TABLE'), dfs=df)
 
-    ###################
-    # MYSQL variables #
-    ###################
-    # mysql-rfam-public.ebi.ac.uk
-    host = os.getenv('SQL_HOST', 'mysql-rfam-public.ebi.ac.uk')
-    # 4497
-    port = os.getenv('SQL_PORT', 4497)
-    # rfamro
-    user = os.getenv('SQL_USER', 'rfamro')
-    # <empty string>
-    password = ''
-    # Rfam
-    database = os.getenv('SQL_DB_NAME', 'Rfam')
+def init_context(context):
+    # IGZ variables
+    igz_v3f = os.getenv('IGZ_V3F')
+    igz_v3f_port = os.getenv('IGZ_V3F_PORT')
 
-    conn = pymysql.connect(
+    # MYSQL variables
+    host = os.getenv('SQL_HOST')
+    port = os.getenv('SQL_PORT')
+    user = os.getenv('SQL_USER')
+    password = os.getenv('SQL_PWD', "")
+    database = os.getenv('SQL_DB_NAME')
+
+    # Init v3io-frames connection and set it as a context attribute
+    client = v3f.Client(address=f'{igz_v3f}:{igz_v3f_port}', password=os.getenv('IGZ_PWD'))
+    setattr(context, 'client', client)
+
+    # Init DB connection and set it as a context attribute
+    dbconn = pymysql.connect(
         host=host,
         port=int(port),
         user=user,
         passwd=password,
         db=database,
         charset='utf8mb4')
-    df = pd.read_sql_query('select rfam_acc,rfam_id,auto_wiki,description,author,seed_source FROM family LIMIT 10', conn)
-    for index, row in df.iterrows():
-        body = _pack_putitem_body(index, row)
-        try:
-            res = _putitem(f'http://v3io-webapi:8081/{container}/{table}/', body, igz_user, igz_password)
-
-        except Exception:
-            context.logger.warn("Failed to send request")
-            return context.Response(body='An issue was occured',
-                                headers={},
-                                content_type='text/plain',
-                                status_code=500)
-
-    return context.Response(body='PutItem completed successfully',
-                        headers={},
-                        content_type='text/plain',
-                        status_code=200)
+    setattr(context, 'dbconn', dbconn)
