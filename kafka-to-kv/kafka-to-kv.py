@@ -23,8 +23,16 @@ def get_request_url(nginx_host, nginx_port, container_id, table_name):
     return 'http://{0}:{1}/{2}/{3}'.format(nginx_host, nginx_port, container_id, table_name)
 
 
+def create_encoded_auth(username, password):
+    s = '{0}:{1}'.format(username, password)
+    b = bytearray()
+    b.extend(map(ord, s))
+    res = base64.encodestring(b)
+    res = res.decode('utf-8').replace('\n', '')
+    return res
+
 def get_request_headers(v3io_function, username, password):
-    encoded_auth = base64.b64encode('{0}:{1}'.format(username, password))
+    encoded_auth = create_encoded_auth(username, password)
     return {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
