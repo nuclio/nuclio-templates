@@ -1,0 +1,33 @@
+metadata:
+  name: kafka-to-kv
+spec:
+  build:
+    functionSourceCode: {{ .SourceCode }}
+  description: "Listens on given kafka topics and inserts given events to KV"
+  handler: "main:handler"
+  runtime: "python:3.6"
+  env:
+  - name: NGINX_HOST
+    value: {{ .NginxHost }}
+  - name: NGINX_PORT
+    value: {{ .NginxPort }}
+  - name: TABLE_NAME
+    value: {{ .TableName }}
+  - name: ContainerId
+    value: {{ .ContainerId }}
+  - name: Username
+    value: {{ .Username }}
+  - name: Password
+    value: {{ .Password }}
+  minReplicas: 1
+  maxReplicas: 1
+  triggers:
+    kafkaTrigger:
+      kind: kafka-cluster
+      attributes:
+        consumerGroup: {{ .ConsumerGroup }}
+        initialOffset: {{ .InitialOffset }}
+        topics: 
+        - {{ .Topic }}
+        brokers:
+        - {{ .Broker }}

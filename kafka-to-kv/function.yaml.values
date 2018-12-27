@@ -1,0 +1,62 @@
+InitialOffset:
+  displayName: Initial Offset
+  kind: choice
+  description: "Kafka initial offset"
+  required: true
+  attributes:
+    choices: [earliest, latest]
+    defaultValue: latest
+
+ConsumerGroup:
+  displayName: Consumer Group
+  kind: string
+  description: "Kafka consumer group name"
+  required: false
+
+Topic:
+  displayName: Topic
+  kind: string
+  description: "Kafka topic name"
+  required: true
+
+Broker:
+  displayName: Broker
+  kind: string
+  description: "Kafka broker address"
+  required: true
+
+NginxHost:
+  displayName: Nginx Host
+  kind: string
+  description: "Nginx host address"
+  required: true
+
+NginxPort:
+  displayName: Nginx Port
+  kind: string
+  description: "Nginx port"
+  required: true
+
+TableName:
+  displayName: Table Name
+  kind: string
+  description: "The name of the wanted KV Table"
+  required: true
+
+ContainerId:
+  displayName: Container Id
+  kind: string
+  description: "The ID of the wanted KV container"
+  required: true
+
+Username:
+  displayName: Username
+  kind: string
+  description: "Username of the KV user"
+  required: true
+
+Password:
+  displayName: Password
+  kind: string
+  description: "Password of the KV ser"
+  required: true
