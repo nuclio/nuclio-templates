@@ -16,8 +16,6 @@ import json
 import base64
 
 import requests
-from logger import Logger
-from event import Event
 
 def get_request_url(nginx_host, nginx_port, container_id, table_name):
 

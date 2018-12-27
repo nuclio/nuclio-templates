@@ -15,11 +15,11 @@ spec:
     value: {{ .NginxPort }}
   - name: TABLE_NAME
     value: {{ .TableName }}
-  - name: ContainerId
+  - name: CONTAINER_ID
     value: {{ .ContainerId }}
-  - name: Username
+  - name: USERNAME
     value: {{ .Username }}
-  - name: Password
+  - name: PASSWORD
     value: {{ .Password }}
   minReplicas: 1
   maxReplicas: 1
