@@ -3,6 +3,8 @@ metadata:
 spec:
   build:
     functionSourceCode: {{ .SourceCode }}
+    commands:
+    - pip install requests
   description: "Listens on given kafka topics and inserts given events to KV"
   handler: "main:handler"
   runtime: "python:3.6"
