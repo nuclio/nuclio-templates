@@ -21,6 +21,7 @@ NGINX_HOST = os.environ['NGINX_HOST']
 NGINX_PORT = os.environ['NGINX_PORT']
 TABLE_NAME = os.environ['TABLE_NAME']
 CONTAINER_NAME = os.environ['CONTAINER_NAME']
+EVENT_KEY = os.environ['EVENT_KEY']
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
 
@@ -52,10 +53,10 @@ def send_request(payload, logger, url, headers):
 
     try:
         response = requests.post(url, json=payload, headers=headers, timeout=1)
-        logger.info(response.status_code)
-        logger.info(response.content)
+        logger.debug(response.status_code)
+        logger.debug(response.content)
     except Exception as e:
-        logger.info("ERROR: {0}".format(str(e)))
+        logger.error("ERROR: {0}".format(str(e)))
 
 
 def insert_key(item,key):
@@ -91,17 +92,17 @@ def generate_attributes(json_object, object_key):
    return attributes
 
 
-def generate_payload(event_body, key):
+def generate_payload(event_body):
     msg = json.loads(event_body)
-    attributes = generate_attributes(msg, key)
+    attributes = generate_attributes(msg, EVENT_KEY)
     payload = {}
-    payload = insert_key(payload, msg[key])
+    payload = insert_key(payload, msg[EVENT_KEY])
     payload = insert_attributes(payload, attributes)
     return payload
 
 
 def handler(context, event):
-    payload = generate_payload(event.body,"key")
+    payload = generate_payload(event.body)
     url = get_request_url()
     headers = get_request_headers('PutItem')
 

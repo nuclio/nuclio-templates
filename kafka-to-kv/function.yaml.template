@@ -21,6 +21,8 @@ spec:
     value: {{ .Username }}
   - name: PASSWORD
     value: {{ .Password }}
+  - name: EVENT_KEY
+    value: {{ .EventKey }}
   minReplicas: 1
   maxReplicas: 1
   triggers:
