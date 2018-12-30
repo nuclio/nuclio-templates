@@ -20,7 +20,7 @@ Topic:
   required: true
 
 Broker:
-  displayName: Broker
+  displayName: Kafka URL and port
   kind: string
   description: "Kafka broker address"
   required: true

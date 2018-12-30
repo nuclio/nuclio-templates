@@ -15,12 +15,47 @@
 import nuclio_sdk
 import json
 
+INGEST_FUNCTION = os.environ['INGEST_FUNCTION']
+
+
+# Example tsdb event:
+#
+# {
+# 		"metric": "cpu",
+# 		"labels": {
+# 			"dc": "7",
+# 			"hostname": "mybesthost"
+# 		},
+# 		"samples": [
+# 			{
+# 				"t": "1532595945142",
+# 				"v": {
+# 					"N": 95.2
+# 				}
+# 			},
+# 			{
+# 				"t": "1532595948517",
+# 				"v": {
+# 					"n": 86.8
+# 				}
+# 			}
+# 		]
+# }
+
+
+# transform kafka event to tsdb event
+def transform_to_tsdb_event(event):
+
+    # implement the transformation
+    return event
+
 
 def handler(context, event):
-    ingest_function = os.environ['INGEST_FUNCTION']
 
     # parse the given event body
     event_body = json.loads(event.body)
 
+    tsdb_event = transform_to_tsdb_event(event_body)
+
     # ingest the parsed event to tsdb
-    context.platform.call_function(ingest_function, nuclio_sdk.Event(body=event_body))
+    context.platform.call_function(INGEST_FUNCTION, nuclio_sdk.Event(body=tsdb_event))
