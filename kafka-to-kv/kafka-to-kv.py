@@ -75,13 +75,13 @@ def generate_attributes(json_object, object_key):
    for key in json_object:
        if key != object_key:
            if type(json_object[key]) == bool:
-               attributes[key] = {“BOOL”: json_object[key]}
+               attributes[key] = {"BOOL": json_object[key]}
            if type(json_object[key]) == int:
-               attributes[key] = {“N”: str(json_object[key])}
+               attributes[key] = {"N": str(json_object[key])}
            if type(json_object[key]) == float:
-               attributes[key] = {“N”: str(json_object[key])}
+               attributes[key] = {"N": str(json_object[key])}
            if type(json_object[key]) == str:
-               attributes[key] = {“S”: json_object[key]}
+               attributes[key] = {"S": json_object[key]}
    return attributes
 
 
