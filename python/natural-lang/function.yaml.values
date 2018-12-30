@@ -5,5 +5,5 @@ targetLang:
   required: true
   attributes:
     choices: [fr, he, es, it, ru]
-    defaultValue: echo
+    defaultValue: fr
 
