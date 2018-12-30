@@ -15,8 +15,8 @@ spec:
     value: {{ .NginxPort }}
   - name: TABLE_NAME
     value: {{ .TableName }}
-  - name: CONTAINER_ID
-    value: {{ .ContainerId }}
+  - name: CONTAINER_NAME
+    value: {{ .ContainerName }}
   - name: USERNAME
     value: {{ .Username }}
   - name: PASSWORD
@@ -29,7 +29,7 @@ spec:
       attributes:
         consumerGroup: {{ .ConsumerGroup }}
         initialOffset: {{ .InitialOffset }}
-        topics: 
+        topics:
         - {{ .Topic }}
         brokers:
         - {{ .Broker }}

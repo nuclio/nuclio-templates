@@ -17,10 +17,10 @@ import base64
 
 import requests
 
-def get_request_url(nginx_host, nginx_port, container_id, table_name):
+def get_request_url(nginx_host, nginx_port, container_name, table_name):
 
     # assumes default container (id=1)
-    return 'http://{0}:{1}/{2}/{3}'.format(nginx_host, nginx_port, container_id, table_name)
+    return 'http://{0}:{1}/{2}/{3}'.format(nginx_host, nginx_port, container_name, table_name)
 
 
 def create_encoded_auth(username, password):
@@ -30,6 +30,7 @@ def create_encoded_auth(username, password):
     res = base64.encodestring(b)
     res = res.decode('utf-8').replace('\n', '')
     return res
+
 
 def get_request_headers(v3io_function, username, password):
     encoded_auth = create_encoded_auth(username, password)
@@ -70,16 +71,18 @@ def insert_attributes(item, attributes, allow_null_attributes=True):
 
 
 def generate_attributes(json_object, object_key):
-    attributes = {}
-    for key in json_object:
-        if key != object_key:
-            if type(json_object[key]) == int:
-                attributes[key] = {"N": json_object[key]}
-            if type(json_object[key]) == float:
-                attributes[key] = {"N": json_object[key]}
-            if type(json_object[key]) == str:
-                attributes[key] = {"S": json_object[key]}
-    return attributes
+   attributes = {}
+   for key in json_object:
+       if key != object_key:
+           if type(json_object[key]) == bool:
+               attributes[key] = {“BOOL”: json_object[key]}
+           if type(json_object[key]) == int:
+               attributes[key] = {“N”: str(json_object[key])}
+           if type(json_object[key]) == float:
+               attributes[key] = {“N”: str(json_object[key])}
+           if type(json_object[key]) == str:
+               attributes[key] = {“S”: json_object[key]}
+   return attributes
 
 
 def generate_payload(event_body, key):
@@ -95,12 +98,12 @@ def handler(context, event):
     nginx_host = os.environ['NGINX_HOST']
     nginx_port = os.environ['NGINX_PORT']
     table_name = os.environ['TABLE_NAME']
-    container_id = os.environ['CONTAINER_ID']
+    container_name = os.environ['CONTAINER_NAME']
     username = os.environ['USERNAME']
     password = os.environ['PASSWORD']
 
     payload = generate_payload(event.body,"key")
-    url = get_request_url(nginx_host, nginx_port, table_name, container_id)
+    url = get_request_url(nginx_host, nginx_port, container_name, table_name)
     headers = get_request_headers('PutItem', username, password)
 
     send_request(payload, context.logger, url, headers)

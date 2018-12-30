@@ -20,7 +20,7 @@ Topic:
   required: true
 
 Broker:
-  displayName: Broker
+  displayName: Kafka URL and port
   kind: string
   description: "Kafka broker address"
   required: true
@@ -36,6 +36,8 @@ NginxPort:
   kind: string
   description: "Nginx port"
   required: true
+  attributes:
+    defaultValue: 8081
 
 TableName:
   displayName: Table Name
@@ -43,10 +45,10 @@ TableName:
   description: "The name of the wanted KV Table"
   required: true
 
-ContainerId:
-  displayName: Container Id
+ContainerName:
+  displayName: Container Name
   kind: string
-  description: "The ID of the wanted KV container"
+  description: "The name of the wanted KV container"
   required: true
 
 Username:
