@@ -17,14 +17,20 @@ import base64
 
 import requests
 
-def get_request_url(nginx_host, nginx_port, container_name, table_name):
+NGINX_HOST = os.environ['NGINX_HOST']
+NGINX_PORT = os.environ['NGINX_PORT']
+TABLE_NAME = os.environ['TABLE_NAME']
+CONTAINER_NAME = os.environ['CONTAINER_NAME']
+USERNAME = os.environ['USERNAME']
+PASSWORD = os.environ['PASSWORD']
 
-    # assumes default container (id=1)
-    return 'http://{0}:{1}/{2}/{3}'.format(nginx_host, nginx_port, container_name, table_name)
+def get_request_url():
+
+    return 'http://{0}:{1}/{2}/{3}/'.format(NGINX_HOST, NGINX_PORT, CONTAINER_NAME, TABLE_NAME)
 
 
-def create_encoded_auth(username, password):
-    s = '{0}:{1}'.format(username, password)
+def create_encoded_auth():
+    s = '{0}:{1}'.format(USERNAME, PASSWORD)
     b = bytearray()
     b.extend(map(ord, s))
     res = base64.encodestring(b)
@@ -32,8 +38,8 @@ def create_encoded_auth(username, password):
     return res
 
 
-def get_request_headers(v3io_function, username, password):
-    encoded_auth = create_encoded_auth(username, password)
+def get_request_headers(v3io_function):
+    encoded_auth = create_encoded_auth()
     return {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
@@ -95,15 +101,8 @@ def generate_payload(event_body, key):
 
 
 def handler(context, event):
-    nginx_host = os.environ['NGINX_HOST']
-    nginx_port = os.environ['NGINX_PORT']
-    table_name = os.environ['TABLE_NAME']
-    container_name = os.environ['CONTAINER_NAME']
-    username = os.environ['USERNAME']
-    password = os.environ['PASSWORD']
-
     payload = generate_payload(event.body,"key")
-    url = get_request_url(nginx_host, nginx_port, container_name, table_name)
-    headers = get_request_headers('PutItem', username, password)
+    url = get_request_url()
+    headers = get_request_headers('PutItem')
 
     send_request(payload, context.logger, url, headers)
