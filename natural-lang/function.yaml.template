@@ -1,0 +1,16 @@
+metadata:
+  name: natural-lang
+spec:
+  description: "Showcases natural language processing"
+  env:
+    - name: TO_LANG
+      value: {{ .TargetLang }}
+  handler: "main:handler"
+  maxReplicas: 1
+  minReplicas: 1
+  runtime: "python:3.6"
+  build:
+    commands:
+      - 'pip install textblob'
+    functionSourceCode: {{ .SourceCode }}
+    codeEntryType: sourceCode
