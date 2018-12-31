@@ -1,0 +1,49 @@
+
+# Copyright 2017 The Nuclio Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+apiVersion: "nuclio.io/v1beta1"
+kind: "Function"
+spec:
+  description: "A simple v3io-frames usage for PutItem using MySQL public DB"
+  handler: "main:handler"
+  env:
+    - name: TABLE
+      value: {{ .table }}
+    - name: IGZ_V3F
+      value: {{ .igzV3f }}
+    - name: IGZ_V3F_PORT
+      value: {{ .igzV3fPort }}
+    - name: IGZ_PWD
+      value: {{ .igzPwd }}
+    - name: SQL_HOST
+      value: {{ .sqlHost }}
+    - name: SQL_PORT
+      value: {{ .sqlPort }}
+    - name: SQL_USER
+      value: {{ .sqlUser }}
+    - name: SQL_PWD
+      value: {{ .sqlPwd }}
+    - name: SQL_DB_NAME
+      value: {{ .sqlDBName }}
+    - name: SQL_QUERY
+      value: {{ .sqlQuery }}
+  runtime: "python:3.6"
+  minReplicas: 1
+  maxReplicas: 1
+  build:
+    commands:
+      - pip install v3io-frames pymysql pandas
+    baseImage: "python:3.6"
