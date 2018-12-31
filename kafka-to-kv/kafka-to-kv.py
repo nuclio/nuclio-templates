@@ -13,58 +13,55 @@
 # limitations under the License.
 import os
 import json
-import base64
 
 import requests
 
-NGINX_HOST = os.environ['NGINX_HOST']
-NGINX_PORT = os.environ['NGINX_PORT']
+V3IO_API_ENDPOINT_HOST = os.environ['V3IO_API_ENDPOINT_HOST']
+V3IO_API_ENDPOINT_PORT = os.environ['V3IO_API_ENDPOINT_PORT']
 TABLE_NAME = os.environ['TABLE_NAME']
 CONTAINER_NAME = os.environ['CONTAINER_NAME']
 EVENT_KEY = os.environ['EVENT_KEY']
 USERNAME = os.environ['USERNAME']
 PASSWORD = os.environ['PASSWORD']
 
-def get_request_url():
 
-    return 'http://{0}:{1}/{2}/{3}/'.format(NGINX_HOST, NGINX_PORT, CONTAINER_NAME, TABLE_NAME)
+def handler(context, event):
+    payload = _generate_payload(event.body)
+    url = _get_request_url()
+    headers = _get_request_headers('PutItem')
+    auth = requests.auth.HTTPBasicAuth(USERNAME, PASSWORD)
 
-
-def create_encoded_auth():
-    s = '{0}:{1}'.format(USERNAME, PASSWORD)
-    b = bytearray()
-    b.extend(map(ord, s))
-    res = base64.encodestring(b)
-    res = res.decode('utf-8').replace('\n', '')
-    return res
+    _send_request(payload, context.logger, url, headers, auth)
 
 
-def get_request_headers(v3io_function):
-    encoded_auth = create_encoded_auth()
+def _get_request_url():
+    return f'http://{V3IO_API_ENDPOINT_HOST}:{V3IO_API_ENDPOINT_PORT}/{CONTAINER_NAME}/{TABLE_NAME}/'
+
+
+def _get_request_headers(v3io_function):
     return {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
         'X-v3io-function': v3io_function,
-        'Authorization': 'Basic {0}'.format(encoded_auth),
     }
 
 
-def send_request(payload, logger, url, headers):
-
+def _send_request(payload, logger, url, headers, auth):
     try:
-        response = requests.post(url, json=payload, headers=headers, timeout=1)
+        response = requests.post(url, json=payload, headers=headers, auth=auth, timeout=1)
         logger.debug(response.status_code)
         logger.debug(response.content)
     except Exception as e:
-        logger.error("ERROR: {0}".format(str(e)))
+        logger.error('ERROR: {0}'.format(str(e)))
 
 
-def insert_key(item,key):
-    item['Key'] = {"name": {"S": key}}
+def _insert_key(key):
+    item = {}
+    item['Key'] = {'name': {'S': key}}
     return item
 
 
-def insert_attributes(item, attributes, allow_null_attributes=True):
+def _insert_attributes(item, attributes, allow_null_attributes=True):
     if attributes:
         item['Item'] = {}
         for attr, definition in attributes.items():
@@ -77,33 +74,24 @@ def insert_attributes(item, attributes, allow_null_attributes=True):
     return item
 
 
-def generate_attributes(json_object, object_key):
-   attributes = {}
-   for key in json_object:
-       if key != object_key:
-           if type(json_object[key]) == bool:
-               attributes[key] = {"BOOL": json_object[key]}
-           if type(json_object[key]) == int:
-               attributes[key] = {"N": str(json_object[key])}
-           if type(json_object[key]) == float:
-               attributes[key] = {"N": str(json_object[key])}
-           if type(json_object[key]) == str:
-               attributes[key] = {"S": json_object[key]}
-   return attributes
+def _generate_attributes(json_object, object_key):
+    attributes = {}
+    for key in json_object:
+        object_type = type(json_object[key])
+        if key != object_key:
+            if object_type is bool:
+                attributes[key] = {'BOOL': json_object[key]}
+            elif object_type is int:
+                attributes[key] = {'N': str(json_object[key])}
+            elif object_type is float:
+                attributes[key] = {'N': str(json_object[key])}
+            elif object_type is str:
+                attributes[key] = {'S': json_object[key]}
+    return attributes
 
 
-def generate_payload(event_body):
+def _generate_payload(event_body):
     msg = json.loads(event_body)
-    attributes = generate_attributes(msg, EVENT_KEY)
-    payload = {}
-    payload = insert_key(payload, msg[EVENT_KEY])
-    payload = insert_attributes(payload, attributes)
-    return payload
-
-
-def handler(context, event):
-    payload = generate_payload(event.body)
-    url = get_request_url()
-    headers = get_request_headers('PutItem')
-
-    send_request(payload, context.logger, url, headers)
+    attributes = _generate_attributes(msg, EVENT_KEY)
+    payload = _insert_key(msg[EVENT_KEY])
+    return _insert_attributes(payload, attributes)

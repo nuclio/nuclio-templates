@@ -25,16 +25,16 @@ Broker:
   description: "Kafka broker address"
   required: true
 
-NginxHost:
-  displayName: Nginx Host
+V3ioApiEndpointHost:
+  displayName: V3io Api Endpoint Host
   kind: string
-  description: "Nginx host address"
+  description: "The address of the V3io API endpoint host"
   required: true
 
-NginxPort:
-  displayName: Nginx Port
+V3ioApiEndpointPort:
+  displayName: V3io Api Endpoint Port
   kind: string
-  description: "Nginx port"
+  description: "The port of the V3io API endpoint"
   required: true
   attributes:
     defaultValue: 8081
