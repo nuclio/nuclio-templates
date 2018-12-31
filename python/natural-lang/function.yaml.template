@@ -3,7 +3,7 @@ metadata:
 spec:
   description: "Showcases natural language processing"
   env:
-    - name: MANIPULATION_KIND
+    - name: TO_LANG
       value: {{ .TargetLang }}
   handler: "main:handler"
   maxReplicas: 1
@@ -14,7 +14,3 @@ spec:
       - 'pip install textblob'
     functionSourceCode: {{ .SourceCode }}
     codeEntryType: sourceCode
-  env:
-    - name: TO_LANG
-      value: fr
-
