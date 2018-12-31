@@ -18,5 +18,5 @@ def handler(context, event):
                              subjectivity=str(corrected.sentiment.subjectivity))
 
     # read target language from environment and return translated text
-    lang = os.getenv('TO_LANG', "he")
+    lang = os.getenv('TO_LANG')
     return str(corrected.translate(to=lang))

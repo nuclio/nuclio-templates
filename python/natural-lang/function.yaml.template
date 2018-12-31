@@ -4,7 +4,7 @@ spec:
   description: "Showcases natural language processing"
   env:
     - name: MANIPULATION_KIND
-      value: {{ .targetLang }}
+      value: {{ .TargetLang }}
   handler: "main:handler"
   maxReplicas: 1
   minReplicas: 1
