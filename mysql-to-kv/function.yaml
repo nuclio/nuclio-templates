@@ -21,25 +21,25 @@ spec:
   handler: "main:handler"
   env:
     - name: TABLE
-      value: {{ .table }}
+      value: {{ .Table }}
     - name: IGZ_V3F
-      value: {{ .igzV3f }}
+      value: {{ .IgzV3f }}
     - name: IGZ_V3F_PORT
-      value: {{ .igzV3fPort }}
+      value: {{ .IgzV3fPort }}
     - name: IGZ_PWD
-      value: {{ .igzPwd }}
+      value: {{ .IgzPwd }}
     - name: SQL_HOST
-      value: {{ .sqlHost }}
+      value: {{ .SqlHost }}
     - name: SQL_PORT
-      value: {{ .sqlPort }}
+      value: {{ .SqlPort }}
     - name: SQL_USER
-      value: {{ .sqlUser }}
+      value: {{ .SqlUser }}
     - name: SQL_PWD
-      value: {{ .sqlPwd }}
+      value: {{ .SqlPwd }}
     - name: SQL_DB_NAME
-      value: {{ .sqlDBName }}
+      value: {{ .SqlDBName }}
     - name: SQL_QUERY
-      value: {{ .sqlQuery }}
+      value: {{ .SqlQuery }}
   runtime: "python:3.6"
   minReplicas: 1
   maxReplicas: 1

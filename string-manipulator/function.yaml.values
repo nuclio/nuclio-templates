@@ -1,4 +1,4 @@
-manipulationKind:
+ManipulationKind:
   displayName: Manipulation Kind
   kind: choice
   description: "What do to with the incoming request body"
@@ -7,7 +7,7 @@ manipulationKind:
     choices: [echo, reverse, md5]
     defaultValue: echo
 
-maxWorkers:
+MaxWorkers:
   displayName: Number of workers
   kind: number
   description: "Number of requests to handle concurrently"

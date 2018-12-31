@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-table:
+Table:
   displayName: Table name
   kind: string
   description: "Name of target table"
@@ -20,7 +20,7 @@ table:
   attributes:
     defaultValue: table
 
-igzV3f:
+IgzV3f:
   displayName: v3io-frames  endpoint
   kind: string
   description: "v3io-frames endpoint"
@@ -28,7 +28,7 @@ igzV3f:
   attributes:
     defaultValue: v3io-framesd
 
-igzV3fPort:
+IgzV3fPort:
   displayName: v3io-frames port
   kind: number
   description: "v3io-frames endpoint port"
@@ -36,43 +36,43 @@ igzV3fPort:
   attributes:
     defaultValue: 8081
 
-igzPwd:
+IgzPwd:
   displayName: System password
   kind: string
   description: "System password"
   required: true
 
-sqlHost:
+SqlHost:
   displayName: MySQL DB hostname
   kind: string
   description: "Hostname of the MySQL database"
   required: true
 
-sqlPort:
+SqlPort:
   displayName: MySQL DB port
   kind: number
   description: "port number of the MySQL database"
   required: true
 
-sqlUser:
+SqlUser:
   displayName: MySQL DB username
   kind: string
   description: "Username of the MySQL database"
   required: true
 
-sqlPwd:
+SqlPwd:
   displayName: MySQL DB password
   kind: string
   description: "Password of the MySQL database"
   required: false
 
-sqlDBName:
+SqlDBName:
   displayName: MySQL DB name
   kind: string
   description: "Name of the MySQL database"
   required: true
 
-sqlQuery:
+SqlQuery:
   displayName: MySQL query string
   kind: string
   description: "SQL query"

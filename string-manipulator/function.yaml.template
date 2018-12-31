@@ -6,7 +6,7 @@ spec:
   description: "Manipulates the event body, according to configured manipulation"
   env:
     - name: MANIPULATION_KIND
-      value: {{ .manipulationKind }}
+      value: {{ .ManipulationKind }}
   handler: "main:handler"
   runtime: "python:3.6"
   minReplicas: 1
@@ -14,4 +14,4 @@ spec:
   triggers:
     myHttpTrigger:
       kind: http
-      maxWorkers: {{ .maxWorkers }}
+      maxWorkers: {{ .MaxWorkers }}

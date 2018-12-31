@@ -1,9 +1,0 @@
-TargetLang:
-  displayName: Target language
-  kind: choice
-  description: "Target language for translation (e.g. he, fr)"
-  required: true
-  attributes:
-    choices: [fr, he, es, it, ru]
-    defaultValue: fr
-
