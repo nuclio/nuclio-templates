@@ -71,3 +71,11 @@ sqlDBName:
   kind: string
   description: "Name of the MySQL database"
   required: true
+
+sqlQuery:
+  displayName: MySQL query string
+  kind: string
+  description: "SQL query"
+  required: true
+  attributes:
+    defaultValue: select rfam_acc,rfam_id,auto_wiki FROM family LIMIT 10

@@ -38,6 +38,8 @@ spec:
       value: {{ .sqlPwd }}
     - name: SQL_DB_NAME
       value: {{ .sqlDBName }}
+    - name: SQL_QUERY
+      value: {{ .sqlQuery }}
   runtime: "python:3.6"
   minReplicas: 1
   maxReplicas: 1

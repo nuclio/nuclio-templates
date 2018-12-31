@@ -18,7 +18,8 @@ import pandas as pd
 import v3io_frames as v3f
 
 def handler(context, event):
-    df = pd.read_sql_query('select rfam_acc,rfam_id,auto_wiki FROM family LIMIT 10', context.dbconn)
+    sql_query = os.getenv('SQL_QUERY')
+    df = pd.read_sql_query(sql_query, context.dbconn)
     context.client.write(backend='kv', table=os.getenv('TABLE'), dfs=df)
 
 def init_context(context):
