@@ -1,0 +1,34 @@
+InitialOffset:
+  displayName: Initial Offset
+  kind: choice
+  description: "Kafka initial offset"
+  required: true
+  attributes:
+    choices: [earliest, latest]
+    defaultValue: latest
+
+ConsumerGroup:
+  displayName: Consumer group
+  kind: string
+  description: "Kafka consumer group name"
+  required: false
+
+Topic:
+  displayName: Topic
+  kind: string
+  description: "Kafka topic name"
+  required: true
+
+Broker:
+  displayName: Kafka URL and port
+  kind: string
+  description: "Kafka broker address"
+  required: true
+
+IngestFunction:
+  displayName: Ingest Function (e.g. default-tenant-tsdb-nuclio-ingest)
+  kind: string
+  description: "Ingest function name"
+  required: true
+  attributes:
+    defaultValue: default-tenant-tsdb-nuclio-ingest
