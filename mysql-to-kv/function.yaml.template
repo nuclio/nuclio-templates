@@ -44,6 +44,7 @@ spec:
   minReplicas: 1
   maxReplicas: 1
   build:
+    functionSourceCode: {{ .SourceCode }}
     commands:
       - pip install v3io-frames pymysql pandas
     baseImage: "python:3.6"
