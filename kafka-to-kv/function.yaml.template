@@ -1,0 +1,37 @@
+metadata:
+  name: kafka-to-kv
+spec:
+  build:
+    functionSourceCode: {{ .SourceCode }}
+    commands:
+    - pip install requests
+  description: "Listens on given kafka topics and inserts given events to KV"
+  handler: "main:handler"
+  runtime: "python:3.6"
+  env:
+  - name: V3IO_API_ENDPOINT_HOST
+    value: {{ .V3ioApiEndpointHost }}
+  - name: V3IO_API_ENDPOINT_PORT
+    value: {{ .V3ioApiEndpointPort }}
+  - name: TABLE_NAME
+    value: {{ .TableName }}
+  - name: CONTAINER_NAME
+    value: {{ .ContainerName }}
+  - name: USERNAME
+    value: {{ .Username }}
+  - name: PASSWORD
+    value: {{ .Password }}
+  - name: EVENT_KEY
+    value: {{ .EventKey }}
+  minReplicas: 1
+  maxReplicas: 1
+  triggers:
+    kafkaTrigger:
+      kind: kafka-cluster
+      attributes:
+        consumerGroup: {{ .ConsumerGroup }}
+        initialOffset: {{ .InitialOffset }}
+        topics:
+        - {{ .Topic }}
+        brokers:
+        - {{ .Broker }}

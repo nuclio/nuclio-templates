@@ -1,0 +1,70 @@
+InitialOffset:
+  displayName: Initial Offset
+  kind: choice
+  description: "Kafka initial offset"
+  required: true
+  attributes:
+    choices: [earliest, latest]
+    defaultValue: latest
+
+ConsumerGroup:
+  displayName: Consumer Group
+  kind: string
+  description: "Kafka consumer group name"
+  required: false
+
+Topic:
+  displayName: Topic
+  kind: string
+  description: "Kafka topic name"
+  required: true
+
+Broker:
+  displayName: Kafka URL and port
+  kind: string
+  description: "Kafka broker address"
+  required: true
+
+V3ioApiEndpointHost:
+  displayName: V3io Api Endpoint Host
+  kind: string
+  description: "The address of the V3io API endpoint host"
+  required: true
+
+V3ioApiEndpointPort:
+  displayName: V3io Api Endpoint Port
+  kind: string
+  description: "The port of the V3io API endpoint"
+  required: true
+  attributes:
+    defaultValue: 8081
+
+TableName:
+  displayName: Table Name
+  kind: string
+  description: "The name of the wanted KV Table"
+  required: true
+
+ContainerName:
+  displayName: Container Name
+  kind: string
+  description: "The name of the wanted KV container"
+  required: true
+
+EventKey:
+  displayName: Event Key
+  kind: string
+  description: "The key of the given events"
+  required: true
+
+Username:
+  displayName: Username
+  kind: string
+  description: "Username of the KV user"
+  required: true
+
+Password:
+  displayName: Password
+  kind: string
+  description: "Password of the KV ser"
+  required: true
