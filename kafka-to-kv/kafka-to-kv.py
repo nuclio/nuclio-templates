@@ -13,7 +13,6 @@
 # limitations under the License.
 import os
 import json
-
 import requests
 
 V3IO_API_ENDPOINT_HOST = os.environ['V3IO_API_ENDPOINT_HOST']
