@@ -72,3 +72,4 @@ Password:
   order: 2
   attributes:
     password: true
+    defaultValue: ""
