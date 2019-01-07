@@ -70,3 +70,5 @@ Password:
   description: "Password of the KV ser"
   required: true
   order: 2
+  attributes:
+    password: true
