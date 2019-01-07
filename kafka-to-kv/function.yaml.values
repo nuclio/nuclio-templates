@@ -62,9 +62,11 @@ Username:
   kind: string
   description: "Username of the KV user"
   required: true
+  order: 1
 
 Password:
   displayName: Password
   kind: string
   description: "Password of the KV ser"
   required: true
+  order: 2
