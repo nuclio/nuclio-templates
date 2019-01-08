@@ -30,6 +30,8 @@ V3ioApiEndpointHost:
   kind: string
   description: "The address of the V3io API endpoint host"
   required: true
+  attributes:
+    defaultValue: localhost
 
 V3ioApiEndpointPort:
   displayName: V3io Api Endpoint Port
