@@ -1,35 +1,9 @@
-InitialOffset:
-  displayName: Initial Offset
-  kind: choice
-  description: "Kafka initial offset"
-  required: true
-  attributes:
-    choices: [earliest, latest]
-    defaultValue: latest
-
-ConsumerGroup:
-  displayName: Consumer Group
-  kind: string
-  description: "Kafka consumer group name"
-  required: false
-
-Topic:
-  displayName: Topic
-  kind: string
-  description: "Kafka topic name"
-  required: true
-
-Broker:
-  displayName: Kafka URL and port
-  kind: string
-  description: "Kafka broker address"
-  required: true
-
 V3ioApiEndpointHost:
   displayName: V3io Api Endpoint Host
   kind: string
   description: "The address of the V3io API endpoint host"
   required: true
+  order: 0
   attributes:
     defaultValue: localhost
 
@@ -38,40 +12,78 @@ V3ioApiEndpointPort:
   kind: string
   description: "The port of the V3io API endpoint"
   required: true
+  order: 1
   attributes:
     defaultValue: 8081
+    
+ContainerName:
+  displayName: Container Name
+  kind: string
+  description: "The name of the wanted KV container"
+  required: true    
+  order: 2
 
 TableName:
   displayName: Table Name
   kind: string
   description: "The name of the wanted KV Table"
   required: true
+  order: 3
 
-ContainerName:
-  displayName: Container Name
-  kind: string
-  description: "The name of the wanted KV container"
-  required: true
 
 EventKey:
   displayName: Event Key
   kind: string
   description: "The key of the given events"
   required: true
+  order: 4
+
+Broker:
+  displayName: Kafka URL and port
+  kind: string
+  description: "Kafka broker address"
+  required: true
+  order: 5
+
+Topic:
+  displayName: Topic
+  kind: string
+  description: "Kafka topic name"
+  required: true
+  order: 6
+
+ConsumerGroup:
+  displayName: Consumer Group
+  kind: string
+  description: "Kafka consumer group name"
+  required: false 
+  order: 7
+  attributes:
+    defaultValue: kafkaToKVGroup
+    
+InitialOffset:
+  displayName: Initial Offset
+  kind: choice
+  description: "Kafka initial offset"
+  required: true
+  order: 8
+  attributes:
+    choices: [earliest, latest]
+    defaultValue: latest
 
 Username:
   displayName: Username
   kind: string
   description: "Username of the KV user"
   required: true
-  order: 1
+  order: 9
 
 Password:
   displayName: Password
   kind: string
   description: "Password of the KV ser"
   required: true
-  order: 2
+  order: 10
   attributes:
     password: true
     defaultValue: ""
