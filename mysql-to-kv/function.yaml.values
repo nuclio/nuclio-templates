@@ -13,69 +13,69 @@
 # limitations under the License.
 
 Table:
+  order: 1
   displayName: Table name
   kind: string
-  description: "Name of target table"
+  description: "Name of Iguazio's table destination"
   required: true
   attributes:
     defaultValue: table
 
 IgzV3f:
-  displayName: v3io-frames  endpoint
+  order: 2
+  displayName: v3io-frames endpoint
   kind: string
-  description: "v3io-frames endpoint"
+  description: "v3io-frames endpoint including port ID"
   required: true
   attributes:
-    defaultValue: v3io-framesd
-
-IgzV3fPort:
-  displayName: v3io-frames port
-  kind: number
-  description: "v3io-frames endpoint port"
-  required: true
-  attributes:
-    defaultValue: 8081
+    defaultValue: v3io-framesd:8081
 
 IgzPwd:
-  displayName: System password
+  order: 3
+  displayName: Iguazio's system password
   kind: string
-  description: "System password"
   required: true
+  attributes:
+    password: true
 
 SqlHost:
+  order: 4
   displayName: MySQL DB hostname
   kind: string
-  description: "Hostname of the MySQL database"
   required: true
 
 SqlPort:
+  order: 5
   displayName: MySQL DB port
   kind: number
-  description: "port number of the MySQL database"
   required: true
 
 SqlUser:
+  order: 6
   displayName: MySQL DB username
   kind: string
-  description: "Username of the MySQL database"
   required: true
 
 SqlPwd:
+  order: 7
   displayName: MySQL DB password
   kind: string
-  description: "Password of the MySQL database"
   required: false
+  attributes:
+    password: true
 
 SqlDBName:
+  order: 8
   displayName: MySQL DB name
   kind: string
   description: "Name of the MySQL database"
   required: true
 
 SqlQuery:
+  order: 9
   displayName: MySQL query string
   kind: string
-  description: "SQL query"
+  description: "E.G - SELECT * FROM table LIMIT 10"
   required: true
   attributes:
     defaultValue: select rfam_acc,rfam_id,auto_wiki FROM family LIMIT 10
