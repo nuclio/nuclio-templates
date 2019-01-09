@@ -22,13 +22,17 @@ ContainerName:
   description: "The name of the wanted KV container"
   required: true    
   order: 2
+  attributes:
+    defaultValue: bigdata
 
 TableName:
-  displayName: Table Name
+  displayName: KV Table Name
   kind: string
   description: "The name of the wanted KV Table"
   required: true
   order: 3
+  attributes:
+  defaultValue: kv
 
 
 EventKey:
