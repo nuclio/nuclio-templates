@@ -33,10 +33,10 @@ InitialOffset:
 
 
 IngestFunction:
-  displayName: Ingest Function (e.g. default-tenant-tsdb-nuclio-ingest)
+  displayName: Ingest Function (e.g. sample-tsdb-functions-ingest)
   kind: string
   description: "Ingest function name"
   required: true
   order: 4
   attributes:
-    defaultValue: default-tenant-tsdb-nuclio-ingest
+    defaultValue: sample-tsdb-functions-ingest
