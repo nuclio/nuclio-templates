@@ -4,8 +4,6 @@ V3ioApiEndpointHost:
   description: "The address of the V3io API endpoint host"
   required: true
   order: 0
-  attributes:
-    defaultValue: localhost
 
 V3ioApiEndpointPort:
   displayName: V3io Api Endpoint Port
