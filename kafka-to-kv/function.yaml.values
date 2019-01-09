@@ -32,7 +32,7 @@ TableName:
   required: true
   order: 3
   attributes:
-  defaultValue: kv
+    defaultValue: kv
 
 
 EventKey:
