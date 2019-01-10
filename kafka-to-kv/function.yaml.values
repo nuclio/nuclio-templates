@@ -1,34 +1,42 @@
-V3ioApiEndpointHost:
-  displayName: V3io Api Endpoint Host
+WebAPIHostAndPort:
+  displayName: Web API host and port
   kind: string
-  description: "The address of the V3io API endpoint host"
+  description: "The address of Iguazio WebAPI. you can take it from the services screen"
   required: true
   order: 0
 
-V3ioApiEndpointPort:
-  displayName: V3io Api Endpoint Port
+Username:
+  displayName: Username
   kind: string
-  description: "The port of the V3io API endpoint"
+  description: "Iguazio username"
   required: true
   order: 1
+
+Password:
+  displayName: Password
+  kind: string
+  description: "Iguazio user's password"
+  required: true
+  order: 2
   attributes:
-    defaultValue: 8081
-    
+    password: true
+    defaultValue: ""
+
 ContainerName:
-  displayName: Container Name
+  displayName: Iguazio Data Container
   kind: string
   description: "The name of the wanted KV container"
   required: true    
-  order: 2
+  order: 3
   attributes:
     defaultValue: bigdata
 
 TableName:
-  displayName: KV Table Name
+  displayName: Table Name
   kind: string
-  description: "The name of the wanted KV Table"
+  description: "The name of the key value table"
   required: true
-  order: 3
+  order: 4
   attributes:
     defaultValue: kv
 
@@ -38,28 +46,28 @@ EventKey:
   kind: string
   description: "The key of the given events"
   required: true
-  order: 4
+  order: 5
 
 Broker:
   displayName: Kafka URL and port
   kind: string
   description: "Kafka broker address"
   required: true
-  order: 5
+  order: 6
 
 Topic:
   displayName: Topic
   kind: string
   description: "Kafka topic name"
   required: true
-  order: 6
+  order: 7
 
 ConsumerGroup:
   displayName: Consumer Group
   kind: string
   description: "Kafka consumer group name"
   required: false 
-  order: 7
+  order: 8
   attributes:
     defaultValue: kafkaToKVGroup
     
@@ -68,24 +76,7 @@ InitialOffset:
   kind: choice
   description: "Kafka initial offset"
   required: true
-  order: 8
+  order: 9
   attributes:
     choices: [earliest, latest]
     defaultValue: latest
-
-Username:
-  displayName: Username
-  kind: string
-  description: "Username of the KV user"
-  required: true
-  order: 9
-
-Password:
-  displayName: Password
-  kind: string
-  description: "Password of the KV ser"
-  required: true
-  order: 10
-  attributes:
-    password: true
-    defaultValue: ""
