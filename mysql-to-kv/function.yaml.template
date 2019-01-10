@@ -37,6 +37,7 @@ spec:
     - name: SQL_USER
       value: {{ .SqlUser }}
     - name: SQL_PWD
+      value: {{ .SqlPwd }}
     - name: SQL_DB_NAME
       value: {{ .SqlDBName }}
     - name: SQL_QUERY
