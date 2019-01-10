@@ -20,6 +20,8 @@ spec:
   description: "A simple v3io-frames usage for PutItem using MySQL public DB"
   handler: "main:handler"
   env:
+    - name: CONTAINER
+      value: {{ .Container }}
     - name: TABLE
       value: {{ .Table }}
     - name: IGZ_V3F
@@ -35,7 +37,6 @@ spec:
     - name: SQL_USER
       value: {{ .SqlUser }}
     - name: SQL_PWD
-      value: {{ .SqlPwd }}
     - name: SQL_DB_NAME
       value: {{ .SqlDBName }}
     - name: SQL_QUERY
