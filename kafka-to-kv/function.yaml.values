@@ -25,7 +25,7 @@ Password:
 ContainerName:
   displayName: Iguazio Data Container
   kind: string
-  description: "The name of the wanted KV container"
+  description: "The name of the wanted data container"
   required: true    
   order: 3
   attributes:
@@ -38,7 +38,7 @@ TableName:
   required: true
   order: 4
   attributes:
-    defaultValue: kv
+    defaultValue: keyValueTable
 
 
 EventKey:
@@ -69,7 +69,7 @@ ConsumerGroup:
   required: false 
   order: 8
   attributes:
-    defaultValue: kafkaToKVGroup
+    defaultValue: kafkaToKeyValueTable
     
 InitialOffset:
   displayName: Initial Offset
