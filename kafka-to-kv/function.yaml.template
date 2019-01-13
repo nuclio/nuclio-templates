@@ -9,10 +9,8 @@ spec:
   handler: "main:handler"
   runtime: "python:3.6"
   env:
-  - name: V3IO_API_ENDPOINT_HOST
-    value: {{ .V3ioApiEndpointHost }}
-  - name: V3IO_API_ENDPOINT_PORT
-    value: {{ .V3ioApiEndpointPort }}
+  - name: WEB_API_HOST_AND_PORT
+    value: {{ .WebAPIHostAndPort }}
   - name: TABLE_NAME
     value: {{ .TableName }}
   - name: CONTAINER_NAME

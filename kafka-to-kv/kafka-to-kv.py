@@ -13,11 +13,9 @@
 # limitations under the License.
 import os
 import json
-
 import requests
 
-V3IO_API_ENDPOINT_HOST = os.environ['V3IO_API_ENDPOINT_HOST']
-V3IO_API_ENDPOINT_PORT = os.environ['V3IO_API_ENDPOINT_PORT']
+WEB_API_HOST_AND_PORT = os.environ['WEB_API_HOST_AND_PORT']
 TABLE_NAME = os.environ['TABLE_NAME']
 CONTAINER_NAME = os.environ['CONTAINER_NAME']
 EVENT_KEY = os.environ['EVENT_KEY']
@@ -35,7 +33,7 @@ def handler(context, event):
 
 
 def _get_request_url():
-    return f'http://{V3IO_API_ENDPOINT_HOST}:{V3IO_API_ENDPOINT_PORT}/{CONTAINER_NAME}/{TABLE_NAME}/'
+    return f'http://{WEB_API_HOST_AND_PORT}/{CONTAINER_NAME}/{TABLE_NAME}/'
 
 
 def _get_request_headers(v3io_function):
@@ -56,8 +54,7 @@ def _send_request(payload, logger, url, headers, auth):
 
 
 def _insert_key(key):
-    item = {}
-    item['Key'] = {'name': {'S': key}}
+    item = {'Key': {'name': {'S': key}}}
     return item
 
 
