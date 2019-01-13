@@ -23,7 +23,7 @@ Password:
     defaultValue: ""
 
 ContainerName:
-  displayName: Iguazio Data Container
+  displayName: Data Container
   kind: string
   description: "The name of the wanted data container"
   required: true    
