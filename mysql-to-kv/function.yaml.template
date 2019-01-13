@@ -20,6 +20,8 @@ spec:
   description: "A simple v3io-frames usage for PutItem using MySQL public DB"
   handler: "main:handler"
   env:
+    - name: CONTAINER
+      value: {{ .Container }}
     - name: TABLE
       value: {{ .Table }}
     - name: IGZ_V3F
