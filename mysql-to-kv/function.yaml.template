@@ -26,8 +26,6 @@ spec:
       value: {{ .Table }}
     - name: IGZ_V3F
       value: {{ .IgzV3f }}
-    - name: IGZ_V3F_PORT
-      value: {{ .IgzV3fPort }}
     - name: IGZ_PWD
       value: {{ .IgzPwd }}
     - name: SQL_HOST
