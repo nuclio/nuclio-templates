@@ -17,7 +17,7 @@
 apiVersion: "nuclio.io/v1beta1"
 kind: "Function"
 spec:
-  description: "A simple v3io-frames usage for PutItem using MySQL public DB"
+  description: "Import MySQL table"
   handler: "main:handler"
   env:
     - name: CONTAINER
