@@ -5,7 +5,7 @@
 The values file consists of a collection of "field descriptors" to be rendered in Nuclio UI in the "Template parameters" dialog.
 
 The root of the file is a dictionary.   
-For each parameter defined in the template YAML, i.e. `{{ .paramName }}`, there should be a key in the root dictionary, i.e. `paramName`.  
+For each parameter defined in the template YAML, i.e. `{{ .ParamName }}`, there should be a key in the root dictionary, i.e. `ParamName`.  
 
 For example, for the following template:
 ```yaml
