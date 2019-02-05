@@ -77,50 +77,16 @@ spec:
                 }
 
                 if (TAG_VERSION != null && TAG_VERSION.length() > 0 && PUBLISHED_BEFORE < expired) {
-                    stage('prepare sources') {
-                        container('jnlp') {
-                            dir("${BUILD_FOLDER}/src/github.com/iguazio/${git_project}") {
-                                git(changelog: false, credentialsId: git_deploy_user_private_key, poll: false, url: "git@github.com:${git_project_user}/${git_project}.git")
-                                sh("git checkout ${TAG_VERSION}")
-                            }
-                        }
-                    }
-
                     parallel(
-                            'linux binaries': {
-                                container('golang') {
-                                    dir("${BUILD_FOLDER}/src/github.com/iguazio/${git_project}") {
-                                        sh("AVREZ_TAG=${TAG_VERSION} GOARCH=amd64 GOOS=linux make bin")
-                                    }
-                                }
+                            'source archive': {
                                 container('jnlp') {
-                                    RELEASE_ID = github.get_release_id(git_project, git_project_user, "${TAG_VERSION}", GIT_TOKEN)
-                                    github.upload_asset(git_project, git_project_user, "avrez-${TAG_VERSION}-linux-amd64", RELEASE_ID, GIT_TOKEN)
-                                }
-                                container('jnlp') {
-                                    withCredentials([
-                                            string(credentialsId: pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[2], variable: 'PACKAGES_ARTIFACTORY_PASSWORD')
-                                    ]) {
-                                        common.upload_file_to_artifactory(pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[0], pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[1], PACKAGES_ARTIFACTORY_PASSWORD, "iguazio-devops/avrez", "avrez-${TAG_VERSION}-linux-amd64")
-                                    }
-                                }
-                            },
-
-                            'darwin binaries': {
-                                container('golang') {
-                                    dir("${BUILD_FOLDER}/src/github.com/iguazio/${git_project}") {
-                                        sh("AVREZ_TAG=${TAG_VERSION} GOARCH=amd64 GOOS=darwin make bin")
-                                    }
-                                }
-                                container('jnlp') {
-                                    RELEASE_ID = github.get_release_id(git_project, git_project_user, "${TAG_VERSION}", GIT_TOKEN)
-                                    github.upload_asset(git_project, git_project_user, "avrez-${TAG_VERSION}-darwin-amd64", RELEASE_ID, GIT_TOKEN)
-                                }
-                                container('jnlp') {
-                                    withCredentials([
-                                            string(credentialsId: pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[2], variable: 'PACKAGES_ARTIFACTORY_PASSWORD')
-                                    ]) {
-                                        common.upload_file_to_artifactory(pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[0], pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[1], PACKAGES_ARTIFACTORY_PASSWORD, "iguazio-devops/avrez", "avrez-${TAG_VERSION}-darwin-amd64")
+                                    dir("${BUILD_FOLDER}") {
+                                        sh("wget https://github.com/gkirok/nuclio-templates/archive/${TAG_VERSION}.zip")
+                                        withCredentials([
+                                                string(credentialsId: pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[2], variable: 'PACKAGES_ARTIFACTORY_PASSWORD')
+                                        ]) {
+                                            common.upload_file_to_artifactory(pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[0], pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[1], PACKAGES_ARTIFACTORY_PASSWORD, "iguazio-devops/nuclio-templates", "${TAG_VERSION}.zip", BUILD_FOLDER)
+                                        }
                                     }
                                 }
                             }
