@@ -2,9 +2,9 @@ label = "${UUID.randomUUID().toString()}"
 BUILD_FOLDER = "/go"
 expired=240
 git_project = "nuclio-templates"
-git_project_user = "iguazio"
-git_deploy_user_token = "iguazio-prod-git-user-token"
-git_deploy_user_private_key = "iguazio-prod-git-user-private-key"
+git_project_user = "gkirok"
+git_deploy_user_token = "iguazio-dev-git-user-token"
+git_deploy_user_private_key = "iguazio-dev-git-user-private-key"
 
 podTemplate(label: "${git_project}-${label}", yaml: """
 apiVersion: v1
@@ -63,7 +63,6 @@ spec:
                     [$class: 'GitSCMSource',
                      credentialsId: git_deploy_user_private_key,
                      remote: "git@github.com:iguazio/pipelinex.git"])).com.iguazio.pipelinex
-            multi_credentials=[pipelinex.DockerRepo.ARTIFACTORY_IGUAZIO, pipelinex.DockerRepo.DOCKER_HUB, pipelinex.DockerRepo.QUAY_IO]
 
             common.notify_slack {
                 stage('get tag data') {
