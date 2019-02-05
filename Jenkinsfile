@@ -79,26 +79,18 @@ spec:
                     parallel(
                             'source archive': {
                                 container('jnlp') {
-                                    sh("ls -la /go")
-                                    sh("ls -la ${BUILD_FOLDER}")
-                                    sh("pwd")
-                                    zho = sh(
-                                            script: "wget https://github.com/gkirok/nuclio-templates/archive/${TAG_VERSION}.zip",
-                                            returnStdout: true
-                                    ).trim()
+                                    sh("wget https://github.com/gkirok/nuclio-templates/archive/${TAG_VERSION}.zip")
 
                                     zip_path = sh(
                                             script: "pwd",
                                             returnStdout: true
                                     ).trim()
 
-                                    sh("ls -la")
-                                        echo "$zho"
-                                        withCredentials([
-                                                string(credentialsId: pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[2], variable: 'PACKAGES_ARTIFACTORY_PASSWORD')
-                                        ]) {
-                                            common.upload_file_to_artifactory(pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[0], pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[1], PACKAGES_ARTIFACTORY_PASSWORD, "iguazio-devops/nuclio-templates", "${TAG_VERSION}.zip", zip_path)
-                                        }
+                                    withCredentials([
+                                            string(credentialsId: pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[2], variable: 'PACKAGES_ARTIFACTORY_PASSWORD')
+                                    ]) {
+                                        common.upload_file_to_artifactory(pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[0], pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[1], PACKAGES_ARTIFACTORY_PASSWORD, "iguazio-devops/nuclio-templates", "${TAG_VERSION}.zip", zip_path)
+                                    }
                                 }
                             }
                     )
