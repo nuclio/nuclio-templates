@@ -1,59 +1,11 @@
 label = "${UUID.randomUUID().toString()}"
-BUILD_FOLDER = "/go"
 expired=240
 git_project = "nuclio-templates"
 git_project_user = "gkirok"
 git_deploy_user_token = "iguazio-dev-git-user-token"
 git_deploy_user_private_key = "iguazio-dev-git-user-private-key"
 
-podTemplate(label: "${git_project}-${label}", yaml: """
-apiVersion: v1
-kind: Pod
-metadata:
-  name: "${git_project}-${label}"
-  labels:
-    jenkins/kube-default: "true"
-    app: "jenkins"
-    component: "agent"
-spec:
-  shareProcessNamespace: true
-  containers:
-    - name: jnlp
-      image: jenkins/jnlp-slave
-      resources:
-        limits:
-          cpu: 1
-          memory: 2Gi
-        requests:
-          cpu: 1
-          memory: 2Gi
-      volumeMounts:
-        - name: go-shared
-          mountPath: /go
-    - name: docker-cmd
-      image: docker
-      command: [ "/bin/sh", "-c", "--" ]
-      args: [ "while true; do sleep 30; done;" ]
-      volumeMounts:
-        - name: docker-sock
-          mountPath: /var/run
-        - name: go-shared
-          mountPath: /go
-    - name: golang
-      image: golang:1.11
-      command: [ "/bin/sh", "-c", "--" ]
-      args: [ "while true; do sleep 30; done;" ]
-      volumeMounts:
-        - name: go-shared
-          mountPath: /go
-  volumes:
-    - name: docker-sock
-      hostPath:
-          path: /var/run
-    - name: go-shared
-      emptyDir: {}
-"""
-) {
+podTemplate(label: "${git_project}-${label}", inheritFrom: "jnlp-docker") {
     node("${git_project}-${label}") {
         withCredentials([
                 string(credentialsId: git_deploy_user_token, variable: 'GIT_TOKEN')
@@ -79,7 +31,7 @@ spec:
                     parallel(
                             'source archive': {
                                 container('jnlp') {
-                                    sh("wget https://github.com/gkirok/nuclio-templates/archive/${TAG_VERSION}.zip")
+                                    sh("wget https://github.com/${git_project_user}/${git_project}/archive/${TAG_VERSION}.zip")
 
                                     zip_path = sh(
                                             script: "pwd",
