@@ -1,9 +1,9 @@
 label = "${UUID.randomUUID().toString()}"
 expired=240
 git_project = "nuclio-templates"
-git_project_user = "gkirok"
-git_deploy_user_token = "iguazio-dev-git-user-token"
-git_deploy_user_private_key = "iguazio-dev-git-user-private-key"
+git_project_user = "nuclio"
+git_deploy_user_token = "iguazio-prod-git-user-token"
+git_deploy_user_private_key = "iguazio-prod-git-user-private-key"
 
 podTemplate(label: "${git_project}-${label}", inheritFrom: "jnlp-docker") {
     node("${git_project}-${label}") {
