@@ -1,0 +1,36 @@
+metadata:
+  name: enrich-stream
+spec:
+  build:
+    functionSourceCode: {{ .SourceCode }}
+    commands:
+    - pip install requests
+  description: "Nuclio function which is triggered by incoming event-messages to a V3IO-Stream. The function enrich the original event-message with data from V3IO-KV table, and writes the enriched message to an output V3IO-Stream."
+  handler: "main:handler"
+  runtime: "python:3.6"
+  env:
+  - name: V3IO_API
+    value: {{ .V3ioAPI }}
+  - name: V3IO_ACCESS_KEY
+    value: {{ .V3ioAccessKey }}
+  - name: V3IO_USERNAME
+    value: {{ .Username }}
+  - name: TABLE_NAME
+    value: {{ .TableName }}
+  - name: CONTAINER_NAME
+    value: {{ .ContainerName }}
+  - name: INPUT_STREAM_SEARCH_KEY
+    value: {{ .InputStreamSearchKey }}
+  - name: OUTPUT_STREAM_NAME
+    value: {{ .OutputStreamName }}
+  minReplicas: 1
+  maxReplicas: 1
+  triggers:
+    v3ioInputStream:
+      username: {{ .Username }}
+      password: {{ .Password }}
+      kind: v3ioStream
+      url: {{ .InputStreamUrl }}
+      attributes:
+        seekTo: {{ .InputStreamSeekTo }}
+        partitions: {{ .InputStreamPartitions }}

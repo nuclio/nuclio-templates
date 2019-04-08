@@ -1,0 +1,91 @@
+V3ioAPI:
+  displayName: Web API host and port
+  kind: string
+  description: "The address of Iguazio WebAPI. you can take it from the services screen"
+  required: true
+  order: 0
+
+V3ioAccessKey:
+  displayName: V3io Access Key
+  kind: string
+  description: "Iguazio user's V3io Access Key"
+  required: true
+  order: 1
+  attributes:
+    password: true
+    defaultValue: ""
+
+Username:
+  displayName: Username
+  kind: string
+  description: "Iguazio username"
+  required: true
+  order: 2
+
+Password:
+  displayName: Password
+  kind: string
+  description: "Iguazio user's password"
+  required: true
+  order: 3
+  attributes:
+    password: true
+    defaultValue: ""
+
+ContainerName:
+  displayName: Data Container
+  kind: string
+  description: "The name of the wanted data container"
+  required: true
+  order: 4
+  attributes:
+    defaultValue: bigdata
+
+TableName:
+  displayName: Table Name
+  kind: string
+  description: "The name of the key value table"
+  required: true
+  order: 5
+  attributes:
+    defaultValue: keyValueTable
+
+InputStreamUrl:
+  displayName: Input Stream Url
+  kind: string
+  description: "The url of the input stream e.g. http://<V3ioApi>/<ContainerName>/<StreamName>/"
+  required: true
+  order: 6
+
+InputStreamSearchKey:
+  displayName: Input Stream Search Key
+  kind: string
+  description: "The name of the field in the incoming event-message containing the value to search for enrichment"
+  required: true
+  order: 7
+
+InputStreamPartitions:
+  displayName: Input Stream Partitions
+  kind: string
+  description: "The stream shard ids to be consumed, e.g.  0,1,2"
+  required: true
+  order: 8
+
+InputStreamSeekTo:
+  displayName: Input Stream Seek To
+  kind: choice
+  description: "This setting determines weather the function will consume all available events in the stream (earlies), or will consume only new incoming events (latest) "
+  required: true
+  order: 9
+  attributes:
+    choices: [earliest, latest]
+    defaultValue: latest
+
+OutputStreamName:
+  displayName: Output Stream Name
+  kind: string
+  description: "The name of the stream the enriched messages will be sent to"
+  required: true
+  order: 10
+  attributes:
+    defaultValue: outputV3ioStream
