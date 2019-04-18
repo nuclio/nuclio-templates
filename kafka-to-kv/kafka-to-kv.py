@@ -15,6 +15,8 @@ import os
 import json
 import requests
 
+hello anant
+
 WEB_API_HOST_AND_PORT = os.environ['WEB_API_HOST_AND_PORT']
 TABLE_NAME = os.environ['TABLE_NAME']
 CONTAINER_NAME = os.environ['CONTAINER_NAME']

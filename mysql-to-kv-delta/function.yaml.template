@@ -1,0 +1,40 @@
+spec:
+  description: "This function imports data from MySQL database into Iguazio NoSQL table on an ongoing basis. It requires having create time and modified time columns in order to fetch the delta in each iteration"
+  handler: "main:handler"
+  env:
+    - name: CONTAINER
+      value: {{ .Container }}
+    - name: TABLE
+      value: {{ .Table }}
+    - name: IGZ_V3F
+      value: {{ .IgzV3f }}
+    - name: IGZ_USER
+      value: {{ .IgzUser }}
+    - name: IGZ_PWD
+      value: {{ .IgzPwd }}
+    - name: SQL_HOST
+      value: {{ .SqlHost }}
+    - name: SQL_PORT
+      value: {{ .SqlPort }}
+    - name: SQL_USER
+      value: {{ .SqlUser }}
+    - name: SQL_PWD
+      value: {{ .SqlPwd }}
+    - name: SQL_DB_NAME
+      value: {{ .SqlDBName }}
+    - name: SQL_QUERY
+      value: {{ .SqlQuery }}
+    - name: DELTA_INTERVAL_MINUTE
+      value: {{ .SqlQueryDeltaInterval }}
+    - name: CREATED_DATETIME_COL
+      value: {{ .SqlQueryCreatedDtCol }}
+    - name: MODIFIED_DATETIME_COL
+      value: {{ .SqlQueryModifiedDtCol }}
+  runtime: "python:3.6"
+  minReplicas: 1
+  maxReplicas: 1
+  build:
+    functionSourceCode: {{ .SourceCode }}
+    commands:
+      - pip install v3io-frames sqlalchemy mysqlclient pandas
+    baseImage: "python:3.6"
