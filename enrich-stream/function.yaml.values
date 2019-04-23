@@ -4,6 +4,8 @@ V3ioAPI:
   description: "The address of Iguazio WebAPI. you can take it from the services screen"
   required: true
   order: 0
+  attributes:
+    defaultValue: v3io-webapi.default-tenant.svc:8081
 
 V3ioAccessKey:
   displayName: V3io Access Key
@@ -39,7 +41,7 @@ ContainerName:
   required: true
   order: 4
   attributes:
-    defaultValue: bigdata
+    defaultValue: users
 
 TableName:
   displayName: Table Name
