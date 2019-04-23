@@ -19,6 +19,7 @@ import os
 
 
 def init_context(context):
+
     # env -> config
     setattr(context.user_data, 'config', {
         'v3io_api': os.environ['V3IO_API'],
@@ -34,12 +35,12 @@ def init_context(context):
 def handler(context, event):
     config = context.user_data.config
     msg = json.loads(event.body)
-    context.logger.info(f'Incoming message: {msg}')
+    context.logger.info('Incoming message', msg=msg)
     enrichment_data = _search_kv(msg, config)
-    context.logger.info(f'Enrichment data: {enrichment_data}')
+    context.logger.info('Enrichment data', enrichment_data=enrichment_data)
     msg['enrichment'] = enrichment_data
     _put_records([msg], config)
-    context.logger.debug(f'Output message: {msg}')
+    context.logger.debug('Output message', msg=msg)
 
 
 def _get_url(v3io_api, container_name, collection_path):
@@ -48,9 +49,9 @@ def _get_url(v3io_api, container_name, collection_path):
 
 def _get_headers(v3io_function, v3io_access_key):
     return {
-        'Content-Type': "application/json",
+        'Content-Type': 'application/json',
         'X-v3io-function': v3io_function,
-        'cache-control': "no-cache",
+        'cache-control': 'no-cache',
         'x-v3io-session-key': v3io_access_key
     }
 
@@ -64,8 +65,8 @@ def _search_kv(msg, config):
     v3io_access_key = config['v3io_access_key']
 
     url = _get_url(v3io_api, container_name, table_path_and_key)
-    headers = _get_headers("GetItem", v3io_access_key)
-    resp = requests.request("POST", url, json={}, headers=headers)
+    headers = _get_headers('GetItem', v3io_access_key)
+    resp = requests.request('POST', url, json={}, headers=headers)
 
     json_response = json.loads(resp.text)
 
@@ -85,9 +86,9 @@ def _put_records(items, config):
 
     records = _items_to_records(items)
     url = _get_url(v3io_api, container_name, output_stream_path)
-    headers = _get_headers("PutRecords", v3io_access_key)
+    headers = _get_headers('PutRecords', v3io_access_key)
 
-    return requests.request("PUT", url, json=records, headers=headers)
+    return requests.request('PUT', url, json=records, headers=headers)
 
 
 def _item_to_b64(item):
