@@ -60,7 +60,7 @@ def _search_kv(msg, config):
     v3io_username = config['v3io_username']
     container_name = config['container_name']
     search_value = msg[config['input_stream_search_key']]
-    table_path_and_key = f"{v3io_username}/examples/streaming_enrichment/{config['table_name']}/{search_value}"
+    table_path_and_key = f"{v3io_username}/examples/stream-enrich/{config['table_name']}/{search_value}"
     v3io_access_key = config['v3io_access_key']
 
     url = _get_url(v3io_api, container_name, table_path_and_key)
@@ -80,7 +80,7 @@ def _put_records(items, config):
     v3io_api = config['v3io_api']
     v3io_username = config['v3io_username']
     container_name = config['container_name']
-    output_stream_path = f"{v3io_username}/examples/streaming_enrichment/{config['output_stream_name']}/"
+    output_stream_path = f"{v3io_username}/examples/stream-enrich/{config['output_stream_name']}/"
     v3io_access_key = config['v3io_access_key']
 
     records = _items_to_records(items)

@@ -67,7 +67,7 @@ InputStreamSearchKey:
 InputStreamPartitions:
   displayName: Input Stream Partitions
   kind: string
-  description: "The stream shard ids to be consumed, e.g.  0,1,2"
+  description: "The stream shard ids to be consumed, e.g.  0"
   required: true
   order: 8
 

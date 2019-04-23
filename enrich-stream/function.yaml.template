@@ -33,4 +33,5 @@ spec:
       url: {{ .InputStreamUrl }}
       attributes:
         seekTo: {{ .InputStreamSeekTo }}
-        partitions: {{ .InputStreamPartitions }}
+        partitions:
+        - {{ .InputStreamPartitions }}
