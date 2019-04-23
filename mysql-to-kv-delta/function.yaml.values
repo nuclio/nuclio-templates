@@ -100,7 +100,7 @@ SqlQuery:
 SqlQueryDeltaInterval:
   displayName: MySQL delta interval(in minutes)
   kind: string
-  description: "to query the table and fetch updates/inserts every x minutes. It should be same as cron interval"
+  description: "Query the table and fetch updates/inserts every x minutes. It should be same as cron interval"
   required: true
   order: 12
   attributes:
