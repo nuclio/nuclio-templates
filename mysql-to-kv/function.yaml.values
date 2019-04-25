@@ -38,8 +38,16 @@ IgzV3f:
   attributes:
     defaultValue: v3io-framesd:8081
 
-IgzPwd:
+IgzUser:
+  displayName: Iguazio's user name
+  kind: string
+  required: true
   order: 4
+  attributes:
+    defaultValue: iguazio
+
+IgzPwd:
+  order: 5
   displayName: Iguazio's system password
   kind: string
   required: true
@@ -47,32 +55,32 @@ IgzPwd:
     password: true
 
 SqlHost:
-  order: 5
+  order: 6
   displayName: MySQL DB hostname
   kind: string
   required: true
 
 SqlPort:
-  order: 6
+  order: 7
   displayName: MySQL DB port ID
   kind: number
   required: true
 
 SqlDBName:
-  order: 7
+  order: 8
   displayName: MySQL DB name
   kind: string
   description: "Name of the MySQL database"
   required: true
 
 SqlUser:
-  order: 8
+  order: 9
   displayName: MySQL DB username
   kind: string
   required: true
 
 SqlPwd:
-  order: 9
+  order: 10
   displayName: MySQL DB password
   kind: string
   required: false
@@ -80,7 +88,7 @@ SqlPwd:
     password: true
 
 SqlQuery:
-  order: 10
+  order: 11
   displayName: MySQL query string
   kind: string
   description: "E.G - SELECT * FROM table LIMIT 10"

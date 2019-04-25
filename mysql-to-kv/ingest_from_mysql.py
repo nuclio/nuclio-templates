@@ -13,36 +13,36 @@
 # limitations under the License.
 
 import os
-import pymysql
 import pandas as pd
 import v3io_frames as v3f
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+# MYSQL db variables
+SQL_QUERY = os.environ['SQL_QUERY']
+SQL_HOST = os.environ['SQL_HOST']
+SQL_PORT = os.environ['SQL_PORT']
+SQL_USER = os.environ['SQL_USER']
+SQL_PWD = os.getenv('SQL_PWD', '')
+SQL_DB_NAME = os.environ['SQL_DB_NAME']
 
 
 def handler(context, event):
-    sql_query = os.getenv('SQL_QUERY')
-    df = pd.read_sql_query(sql_query, context.dbconn)
+    df = pd.read_sql_query({SQL_QUERY}, context.dbconn)
     context.client.write(backend='kv', table=os.getenv('TABLE'), dfs=df)
 
 
 def init_context(context):
-
-    # MYSQL variables
-    host = os.getenv('SQL_HOST')
-    port = os.getenv('SQL_PORT')
-    user = os.getenv('SQL_USER')
-    password = os.getenv('SQL_PWD', "")
-    database = os.getenv('SQL_DB_NAME')
-
     # Init v3io-frames connection and set it as a context attribute
-    client = v3f.Client(address=os.getenv('IGZ_V3F'), password=os.getenv('IGZ_PWD'), container=os.getenv('CONTAINER'))
+    client = v3f.Client(address=os.getenv('IGZ_V3F'),
+                        username=os.getenv('IGZ_USER'),
+                        password=os.getenv('IGZ_PWD'),
+                        container=os.getenv('CONTAINER'))
     setattr(context, 'client', client)
 
-    # Init DB connection and set it as a context attribute
-    dbconn = pymysql.connect(
-        host=host,
-        port=int(port),
-        user=user,
-        passwd=password,
-        db=database,
-        charset='utf8mb4')
+    connection_string = f"mysql://{SQL_USER}:{SQL_PWD}@{SQL_HOST}:{SQL_PORT}/{SQL_DB_NAME}"
+    engine = create_engine(connection_string, encoding='utf8', convert_unicode=True, isolation_level='READ_COMMITTED')
+    session = sessionmaker()
+    session.configure(bind=engine)
+    dbconn = session()
     setattr(context, 'dbconn', dbconn)

@@ -23,6 +23,8 @@ spec:
       value: {{ .Table }}
     - name: IGZ_V3F
       value: {{ .IgzV3f }}
+    - name: IGZ_USER
+      value: {{ .IgzUser }}
     - name: IGZ_PWD
       value: {{ .IgzPwd }}
     - name: SQL_HOST
