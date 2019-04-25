@@ -1,7 +1,3 @@
-
-
-      
-
 # Copyright 2017 The Nuclio Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,13 +20,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import v3io_frames as v3f
 
-
 # MYSQL db variables
 SQL_QUERY = os.environ['SQL_QUERY']
 SQL_HOST = os.environ['SQL_HOST']
 SQL_PORT = os.environ['SQL_PORT']
 SQL_USER = os.environ['SQL_USER']
-SQL_PWD = os.getenv('SQL_PWD', "")
+SQL_PWD = os.getenv('SQL_PWD', '')
 SQL_DB_NAME = os.environ['SQL_DB_NAME']
 
 # MYSQL query variables
@@ -40,30 +35,32 @@ CREATED_DATETIME_COL = os.environ['CREATED_DATETIME_COL']
 
 
 def handler(context, event):
-    datetime_query = str(datetime.datetime.now() - datetime.timedelta(seconds=int(DELTA_INTERVAL_MINUTE)*60))
-    sql_query_diff = SQL_QUERY + " where ("+CREATED_DATETIME_COL+">='"+str(datetime_query)+"' AND "+MODIFIED_DATETIME_COL+" IS NULL) OR ("+MODIFIED_DATETIME_COL+">='"+str(datetime_query)+"')"
+    datetime_query = str(datetime.datetime.now() - datetime.timedelta(seconds=int(DELTA_INTERVAL_MINUTE) * 60))
+    sql_query_diff = f"{SQL_QUERY} where ({CREATED_DATETIME_COL}>='{str(datetime_query)}' AND\
+     {MODIFIED_DATETIME_COL} IS NULL) OR ({MODIFIED_DATETIME_COL}>='{str(datetime_query)}')"
+
+    # sql_query_diff = SQL_QUERY + " where (" + CREATED_DATETIME_COL + ">='" + str(datetime_query) +
+    # "' AND " + MODIFIED_DATETIME_COL + " IS NULL) OR (" + MODIFIED_DATETIME_COL + ">='" + str(datetime_query) + "')"
+
     # for debugging the generated sql query
-    context.logger.debug(sql_query_diff)
+    context.logger.debug("Generated sql query", sql_query_diff)
     df = pd.read_sql(sql_query_diff, context.dbconn.connection())
-     # for debugging no of upserts
-    context.logger.debug("no of delta rows :: {} ".format(df.shape[0]))
+
+    # for debugging no of rows
+    context.logger.debug("No of delta rows :: {} ".format(df.shape[0]))
     context.client.write(backend='kv', table=os.getenv('TABLE'), dfs=df)
 
- 
+
 def init_context(context):
-    
     # Init v3io-frames connection and set it as a context attribute
-    client = v3f.Client(address=os.getenv('IGZ_V3F'), 
+    client = v3f.Client(address=os.getenv('IGZ_V3F'),
                         username=os.getenv('IGZ_USER'),
-                        password=os.getenv('IGZ_PWD'), 
+                        password=os.getenv('IGZ_PWD'),
                         container=os.getenv('CONTAINER'))
     setattr(context, 'client', client)
-    
+
     connection_string = f"mysql://{SQL_USER}:{SQL_PWD}@{SQL_HOST}:{SQL_PORT}/{SQL_DB_NAME}"
-    engine = create_engine(connection_string, 
-                            encoding = 'utf8',
-                            convert_unicode = True,
-                            isolation_level='READ_COMMITTED')
+    engine = create_engine(connection_string, encoding='utf8', convert_unicode=True, isolation_level='READ_COMMITTED')
     session = sessionmaker()
     session.configure(bind=engine)
     dbconn = session()
