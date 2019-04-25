@@ -82,6 +82,7 @@ SqlUser:
   kind: string
   required: true
   order: 9
+  attributes:
 
 SqlPwd:
   displayName: MySQL Password
