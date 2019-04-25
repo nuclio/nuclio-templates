@@ -59,6 +59,7 @@ SqlHost:
   kind: string
   required: true
   order: 6
+  attributes:
 
 SqlPort:
   displayName: MySQL Port ID
@@ -74,6 +75,7 @@ SqlDBName:
   description: "Name of the MySQL database"
   required: true
   order: 8
+  attributes:
 
 SqlUser:
   displayName: MySQL Username
@@ -95,6 +97,7 @@ SqlQuery:
   description: "E.G - SELECT * FROM table LIMIT 10"
   required: true
   order: 11
+  attributes:
 
 SqlQueryDeltaInterval:
   displayName: MySQL delta interval(in minutes)
@@ -102,6 +105,7 @@ SqlQueryDeltaInterval:
   description: "Query the table and fetch updates/inserts every x minutes. It should be same as cron interval"
   required: true
   order: 12
+  attributes:
 
 SqlQueryCreatedDtCol:
   displayName: MySQL create time column (date)
@@ -109,6 +113,7 @@ SqlQueryCreatedDtCol:
   description: "E.G - CreatedDate on the basis of which new records will be fetched"
   required: true
   order: 13
+  attributes:
 
 SqlQueryModifiedDtCol:
   displayName: MySQL modified column (date)
@@ -116,3 +121,4 @@ SqlQueryModifiedDtCol:
   description: "E.G - ModifiedDate on the basis of which modified records will be fetched"
   required: true
   order: 14
+  attributes:
