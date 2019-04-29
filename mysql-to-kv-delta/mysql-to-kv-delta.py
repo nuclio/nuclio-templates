@@ -44,12 +44,12 @@ def handler(context, event):
     datetime_query = str(datetime.datetime.now() - datetime.timedelta(seconds=int(DELTA_INTERVAL_MINUTE) * 60))
     sql_query_diff = f"{SQL_QUERY} where ({CREATED_DATETIME_COL}>='{str(datetime_query)}' AND\
      {MODIFIED_DATETIME_COL} IS NULL) OR ({MODIFIED_DATETIME_COL}>='{str(datetime_query)}')"
-    no_delta_rows = df.shape[0]
+    
    
     # for debugging the generated sql query
     context.logger.debug('Generated sql query', sql_query_diff)
     df = pd.read_sql(sql_query_diff, context.dbconn.connection())
-
+    no_delta_rows = df.shape[0]
     
     # for debugging no of rows
     context.logger.debug('Number of rows processed is ',no_delta_rows)
