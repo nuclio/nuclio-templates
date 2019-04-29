@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 import os
+
 import pandas as pd
-import v3io_frames as v3f
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+import v3io_frames as v3f
 
 # MYSQL db variables
 SQL_QUERY = os.environ['SQL_QUERY']
@@ -34,7 +36,7 @@ CONTAINER = os.environ['CONTAINER']
 
 
 def handler(context, event):
-    df = pd.read_sql_query({SQL_QUERY}, context.dbconn)
+    df = pd.read_sql_query(SQL_QUERY, context.dbconn.connection())
 
     # for debugging the generated my-sql query
     context.logger.debug_with('df count', no_of_records=df.shape[0])
