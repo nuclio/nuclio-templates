@@ -26,18 +26,27 @@ SQL_USER = os.environ['SQL_USER']
 SQL_PWD = os.getenv('SQL_PWD', '')
 SQL_DB_NAME = os.environ['SQL_DB_NAME']
 
+# Iguazio platform variables
+IGZ_V3F = os.environ['IGZ_V3F']
+IGZ_USER = os.environ['IGZ_USER']
+IGZ_PWD = os.environ['IGZ_PWD']
+CONTAINER = os.environ['CONTAINER']
+
 
 def handler(context, event):
     df = pd.read_sql_query({SQL_QUERY}, context.dbconn)
+
+    # for debugging the generated sql query
+    context.logger.debug_with('df count', no_of_records=df.shape[0])
     context.client.write(backend='kv', table=os.getenv('TABLE'), dfs=df)
 
 
 def init_context(context):
     # Init v3io-frames connection and set it as a context attribute
-    client = v3f.Client(address=os.getenv('IGZ_V3F'),
-                        username=os.getenv('IGZ_USER'),
-                        password=os.getenv('IGZ_PWD'),
-                        container=os.getenv('CONTAINER'))
+    client = v3f.Client(address=IGZ_V3F,
+                        user=IGZ_USER,
+                        password=IGZ_PWD,
+                        container=CONTAINER)
     setattr(context, 'client', client)
 
     connection_string = f"mysql://{SQL_USER}:{SQL_PWD}@{SQL_HOST}:{SQL_PORT}/{SQL_DB_NAME}"

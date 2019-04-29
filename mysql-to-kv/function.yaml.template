@@ -45,5 +45,5 @@ spec:
   build:
     functionSourceCode: {{ .SourceCode }}
     commands:
-      - pip install v3io-frames pymysql pandas
+      - pip install v3io-frames sqlalchemy mysqlclient pandas
     baseImage: "python:3.6"
