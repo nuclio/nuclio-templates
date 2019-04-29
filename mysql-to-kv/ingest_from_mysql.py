@@ -36,7 +36,7 @@ CONTAINER = os.environ['CONTAINER']
 def handler(context, event):
     df = pd.read_sql_query({SQL_QUERY}, context.dbconn)
 
-    # for debugging the generated sql query
+    # for debugging the generated my-sql query
     context.logger.debug_with('df count', no_of_records=df.shape[0])
     context.client.write(backend='kv', table=os.getenv('TABLE'), dfs=df)
 
