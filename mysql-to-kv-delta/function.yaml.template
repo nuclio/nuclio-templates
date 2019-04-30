@@ -1,4 +1,3 @@
-
 # Copyright 2017 The Nuclio Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,7 @@
 # limitations under the License.
 
 spec:
-  description: "A simple v3io-frames usage for PutItem using MySQL public DB"
+  description: "This function imports data from MySQL database into Iguazio NoSQL table on an ongoing basis.It requires having create time and modified time columns in order to fetch the delta in each iteration"
   handler: "main:handler"
   env:
     - name: CONTAINER
@@ -39,6 +38,12 @@ spec:
       value: {{ .SqlDBName }}
     - name: SQL_QUERY
       value: {{ .SqlQuery }}
+    - name: DELTA_INTERVAL_MINUTE
+      value: {{ .SqlQueryDeltaInterval }}
+    - name: CREATED_DATETIME_COL
+      value: {{ .SqlQueryCreatedDtCol }}
+    - name: MODIFIED_DATETIME_COL
+      value: {{ .SqlQueryModifiedDtCol }}
   runtime: "python:3.6"
   minReplicas: 1
   maxReplicas: 1
@@ -47,3 +52,4 @@ spec:
     commands:
       - pip install v3io-frames sqlalchemy mysqlclient pandas
     baseImage: "python:3.6"
+    

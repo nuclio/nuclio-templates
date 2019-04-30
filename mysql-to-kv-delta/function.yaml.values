@@ -13,33 +13,33 @@
 # limitations under the License.
 
 Container:
-  order: 1
-  displayName: Container name
+  displayName: Iguazio Data container name
   kind: string
   required: true
+  order: 1
   attributes:
     defaultValue: bigdata
 
 Table:
-  order: 2
-  displayName: Table name
+  displayName: Iguazio table name
   kind: string
   description: "Name of Iguazio's table destination"
   required: true
+  order: 2
   attributes:
     defaultValue: table
 
 IgzV3f:
-  order: 3
-  displayName: v3io-frames endpoint
+  displayName: V3IO frames endpoint
   kind: string
   description: "v3io-frames endpoint including port ID"
   required: true
+  order: 3
   attributes:
     defaultValue: v3io-framesd:8081
 
 IgzUser:
-  displayName: Iguazio's user name
+  displayName: Iguazio user name
   kind: string
   required: true
   order: 4
@@ -47,49 +47,71 @@ IgzUser:
     defaultValue: iguazio
 
 IgzPwd:
-  order: 5
-  displayName: Iguazio's system password
+  displayName: Iguazio user password
   kind: string
   required: true
+  order: 5
   attributes:
     password: true
 
 SqlHost:
-  order: 6
-  displayName: MySQL DB hostname
+  displayName: MySQL Hostname
   kind: string
   required: true
+  order: 6
 
 SqlPort:
-  order: 7
-  displayName: MySQL DB port ID
+  displayName: MySQL Port ID
+  description: "Port number of the SQL DB e.g 3306"
   kind: number
   required: true
-
+  order: 7
+  
 SqlDBName:
-  order: 8
   displayName: MySQL DB name
   kind: string
   description: "Name of the MySQL database"
   required: true
+  order: 8
 
 SqlUser:
-  order: 9
-  displayName: MySQL DB username
+  displayName: MySQL Username
   kind: string
   required: true
+  order: 9
 
 SqlPwd:
-  order: 10
-  displayName: MySQL DB password
+  displayName: MySQL Password
   kind: string
   required: false
+  order: 10
   attributes:
     password: true
 
 SqlQuery:
-  order: 11
-  displayName: MySQL query string
+  displayName: MySQL query
   kind: string
   description: "E.G - SELECT * FROM table LIMIT 10"
   required: true
+  order: 11
+
+SqlQueryDeltaInterval:
+  displayName: MySQL delta interval(in minutes)
+  kind: string
+  description: "Query the table and fetch updates/inserts every x minutes. It should be same as cron interval"
+  required: true
+  order: 12
+
+SqlQueryCreatedDtCol:
+  displayName: MySQL create time column (date)
+  kind: string
+  description: "E.G - CreatedDate on the basis of which new records will be fetched"
+  required: true
+  order: 13
+
+SqlQueryModifiedDtCol:
+  displayName: MySQL modified column (date)
+  kind: string
+  description: "E.G - ModifiedDate on the basis of which modified records will be fetched"
+  required: true
+  order: 14

@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 import os
+import datetime
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -28,6 +28,11 @@ SQL_USER = os.environ['SQL_USER']
 SQL_PWD = os.getenv('SQL_PWD', '')
 SQL_DB_NAME = os.environ['SQL_DB_NAME']
 
+# MYSQL query variables
+DELTA_INTERVAL_MINUTE = os.environ['DELTA_INTERVAL_MINUTE']
+MODIFIED_DATETIME_COL = os.environ['MODIFIED_DATETIME_COL']
+CREATED_DATETIME_COL = os.environ['CREATED_DATETIME_COL']
+
 # Iguazio platform variables
 IGZ_V3F = os.environ['IGZ_V3F']
 IGZ_USER = os.environ['IGZ_USER']
@@ -36,10 +41,16 @@ CONTAINER = os.environ['CONTAINER']
 
 
 def handler(context, event):
-    df = pd.read_sql_query(SQL_QUERY, context.dbconn.connection())
+    datetime_query = str(datetime.datetime.now() - datetime.timedelta(seconds=int(DELTA_INTERVAL_MINUTE) * 60))
+    sql_query_diff = f"{SQL_QUERY} where ({CREATED_DATETIME_COL}>='{str(datetime_query)}' AND\
+     {MODIFIED_DATETIME_COL} IS NULL) OR ({MODIFIED_DATETIME_COL}>='{str(datetime_query)}')"
 
-    # for debugging the generated my-sql query
-    context.logger.debug_with('df count', no_of_records=df.shape[0])
+    # for debugging the generated sql query
+    context.logger.debug_with('Generated sql query', sql_query_diff=sql_query_diff)
+    df = pd.read_sql(sql_query_diff, context.dbconn.connection())
+
+    # for debugging number of rows
+    context.logger.debug_with('No of rows processed from My-SQL', number_of_delta_rows=df.shape[0])
     context.client.write(backend='kv', table=os.getenv('TABLE'), dfs=df)
 
 
