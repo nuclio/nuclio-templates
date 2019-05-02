@@ -35,12 +35,12 @@ def init_context(context):
 def handler(context, event):
     config = context.user_data.config
     msg = json.loads(event.body)
-    context.logger.info('Incoming message', msg=msg)
+    context.logger.info_with('Incoming message', msg=msg)
     enrichment_data = _search_kv(msg, config)
-    context.logger.info('Enrichment data', enrichment_data=enrichment_data)
+    context.logger.info_with('Enrichment data', enrichment_data=enrichment_data)
     msg['enrichment'] = enrichment_data
     _put_records([msg], config)
-    context.logger.debug('Output message', msg=msg)
+    context.logger.debug_with('Output message', msg=msg)
 
 
 def _get_url(v3io_api, container_name, collection_path):
