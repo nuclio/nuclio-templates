@@ -29,7 +29,7 @@ podTemplate(label: "${git_project}-${label}", inheritFrom: "jnlp-docker") {
                             withCredentials([
                                     string(credentialsId: pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[2], variable: 'PACKAGES_ARTIFACTORY_PASSWORD')
                             ]) {
-                                common.upload_file_to_artifactory(pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[0], pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[1], PACKAGES_ARTIFACTORY_PASSWORD, "iguazio-devops/nuclio-templates", "${TAG_VERSION}.zip", zip_path)
+                                common.upload_file_to_artifactory(pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[0], pipelinex.PackagesRepo.ARTIFACTORY_IGUAZIO[1], PACKAGES_ARTIFACTORY_PASSWORD, "iguazio-devops/nuclio-templates", "${github.TAG_VERSION}.zip", zip_path)
                             }
                         }
                     }
