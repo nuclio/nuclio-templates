@@ -19,7 +19,7 @@ podTemplate(label: "${git_project}-${label}", inheritFrom: "jnlp-docker") {
                 github.release(git_deploy_user, git_project, git_project_user, git_project_upstream_user, true, GIT_TOKEN) {
                     stage("upload ${git_project} zip to artifactory") {
                         container('jnlp') {
-                            sh("wget https://github.com/${git_project_user}/${git_project}/archive/${TAG_VERSION}.zip")
+                            sh("wget https://github.com/${git_project_user}/${git_project}/archive/${github.TAG_VERSION}.zip")
 
                             zip_path = sh(
                                     script: "pwd",
