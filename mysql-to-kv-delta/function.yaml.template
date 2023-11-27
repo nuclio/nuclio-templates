@@ -44,12 +44,12 @@ spec:
       value: {{ .SqlQueryCreatedDtCol }}
     - name: MODIFIED_DATETIME_COL
       value: {{ .SqlQueryModifiedDtCol }}
-  runtime: "python:3.6"
+  runtime: "python:3.9"
   minReplicas: 1
   maxReplicas: 1
   build:
     functionSourceCode: {{ .SourceCode }}
     commands:
       - pip install v3io-frames sqlalchemy mysqlclient pandas
-    baseImage: "python:3.6"
+    baseImage: "python:3.9"
     

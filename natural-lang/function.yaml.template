@@ -8,7 +8,7 @@ spec:
   handler: "main:handler"
   maxReplicas: 1
   minReplicas: 1
-  runtime: "python:3.6"
+  runtime: "python:3.9"
   build:
     commands:
       - 'pip install textblob'

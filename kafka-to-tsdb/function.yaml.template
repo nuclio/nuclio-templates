@@ -5,7 +5,7 @@ spec:
     functionSourceCode: {{ .SourceCode }}
   description: "Listens on given kafka topics and ingests given events to TSDB"
   handler: "main:handler"
-  runtime: "python:3.6"
+  runtime: "python:3.9"
   env:
   - name: INGEST_FUNCTION
     value: {{ .IngestFunction }}

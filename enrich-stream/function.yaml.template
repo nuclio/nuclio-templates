@@ -7,7 +7,7 @@ spec:
     - pip install requests
   description: "Nuclio function which is triggered by incoming event-messages to a V3IO-Stream. The function enrich the original event-message with data from V3IO-KV table, and writes the enriched message to an output V3IO-Stream."
   handler: "main:handler"
-  runtime: "python:3.6"
+  runtime: "python:3.9"
   env:
   - name: V3IO_API
     value: {{ .V3ioAPI }}
