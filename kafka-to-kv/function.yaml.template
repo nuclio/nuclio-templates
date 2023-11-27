@@ -7,7 +7,7 @@ spec:
     - pip install requests
   description: "Listens on given kafka topics and inserts given events to KV"
   handler: "main:handler"
-  runtime: "python:3.6"
+  runtime: "python:3.9"
   env:
   - name: WEB_API_HOST_AND_PORT
     value: {{ .WebAPIHostAndPort }}

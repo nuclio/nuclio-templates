@@ -39,11 +39,11 @@ spec:
       value: {{ .SqlDBName }}
     - name: SQL_QUERY
       value: {{ .SqlQuery }}
-  runtime: "python:3.6"
+  runtime: "python:3.9"
   minReplicas: 1
   maxReplicas: 1
   build:
     functionSourceCode: {{ .SourceCode }}
     commands:
       - pip install v3io-frames sqlalchemy mysqlclient pandas
-    baseImage: "python:3.6"
+    baseImage: "python:3.9"
