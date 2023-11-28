@@ -7,3 +7,11 @@ TargetLang:
     choices: [fr, he, es, it, ru]
     defaultValue: fr
 
+SourceLang:
+  displayName: Source language
+  kind: choice
+  description: "Source language of input (e.g. he, fr - default is auto detect)"
+  required: false
+  attributes:
+    choices: [en, fr, he, es, it, ru, auto]
+    defaultValue: auto
