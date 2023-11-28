@@ -3,6 +3,8 @@ metadata:
 spec:
   description: "Showcases natural language processing"
   env:
+    - name: FROM_LANG
+      value: {{ .SourceLang }}
     - name: TO_LANG
       value: {{ .TargetLang }}
   handler: "main:handler"
