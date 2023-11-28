@@ -13,7 +13,7 @@
 # limitations under the License.
 
 spec:
-  description: "This function imports data from MySQL database into Iguazio NoSQL table on an ongoing basis.It requires having create time and modified time columns in order to fetch the delta in each iteration"
+  description: "A function that imports data from MySQL database into Iguazio NoSQL table on an ongoing basis. It requires having create time and modified time columns in order to fetch the delta in each iteration"
   handler: "main:handler"
   env:
     - name: CONTAINER

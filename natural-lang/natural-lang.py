@@ -17,7 +17,7 @@ import os
 
 
 def handler(context, event):
-    context.logger.info('This is an NLP example! ')
+    context.logger.info('This is an NLP example!')
 
     # process and correct the text
     blob = TextBlob(str(event.body))
@@ -32,5 +32,5 @@ def handler(context, event):
                              subjectivity=str(corrected.sentiment.subjectivity))
 
     # read target language from environment and return translated text
-    lang = os.getenv('TO_LANG','fr')
+    lang = os.getenv('TO_LANG', 'fr')
     return str(corrected.translate(to=lang))

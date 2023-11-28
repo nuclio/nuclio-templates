@@ -5,7 +5,7 @@ spec:
     functionSourceCode: {{ .SourceCode }}
     commands:
     - pip install requests
-  description: "Nuclio function which is triggered by incoming event-messages to a V3IO-Stream. The function enrich the original event-message with data from V3IO-KV table, and writes the enriched message to an output V3IO-Stream."
+  description: "A function that is triggered by incoming events from a V3IO-Stream. The function enriches the original event with data from V3IO-KV table, and writes the enriched message to an output V3IO-Stream."
   handler: "main:handler"
   runtime: "python:3.9"
   env:
