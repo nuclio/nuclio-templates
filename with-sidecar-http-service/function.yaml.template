@@ -1,9 +1,9 @@
 metadata:
-  name: string-manipulator
+  name: proxy-to-sidecar
 spec:
   build:
     functionSourceCode: {{ .SourceCode }}
-  description: "Manipulates the event body, according to configured manipulation"
+  description: "Proxy request from nuclio processor pod to sidecar http service"
   env:
     - name: SIDECAR_HOST
       value: {{ .SidecarHost }}
