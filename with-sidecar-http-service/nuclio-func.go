@@ -14,9 +14,9 @@ func Handler(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
 	req.SetBody(event.GetBody())
 	sidecarHost := os.Getenv("SIDECAR_HOST")
 	sidecarPort := os.Getenv("SIDECAR_PORT")
-	sidecarHost, _ := url.JoinPath(fmt.Sprintf("%s:%s", sidecarHost, sidecarPort), event.GetPath())
-	context.Logger.Info(sidecarHost)
-	req.SetRequestURI(sidecarHost)
+	sidecarUrl, _ := url.JoinPath(fmt.Sprintf("%s:%s", sidecarHost, sidecarPort), event.GetPath())
+	context.Logger.Info(sidecarUrl)
+	req.SetRequestURI(sidecarUrl)
 	resp := fasthttp.AcquireResponse()
 	err := fasthttp.Do(req, resp)
 	return nuclio.Response{
