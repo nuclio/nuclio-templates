@@ -1,0 +1,22 @@
+metadata:
+  name: string-manipulator
+spec:
+  build:
+    functionSourceCode: {{ .SourceCode }}
+  description: "Manipulates the event body, according to configured manipulation"
+  env:
+    - name: SIDECAR_HOST
+      value: {{ .SidecarHost }}
+    - name: SIDECAR_PORT
+      value: {{ .SidecarPort }}
+  handler: "main:Handler"
+  runtime: golang
+  minReplicas: 1
+  maxReplicas: 1
+  sidecars:
+   - name: {{ .SidecarName }}
+     image: {{ .SidecarImage }}
+  triggers:
+    myHttpTrigger:
+      kind: http
+      maxWorkers: {{ .MaxWorkers }}
