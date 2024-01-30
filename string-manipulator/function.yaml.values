@@ -15,4 +15,4 @@ MaxWorkers:
   attributes:
     defaultValue: 4
     minValue: 1
-    maxValue: 10
+    maxValue: 10000
