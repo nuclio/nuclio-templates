@@ -16,6 +16,7 @@ func Handler(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
 	reverseProxy := context.UserData.(map[string]interface{})["reverseProxy"].(*httputil.ReverseProxy)
 	sidecarUrl := context.UserData.(map[string]interface{})["server"].(string)
 
+	// populate reverse proxy http request
 	httpRequest, err := http.NewRequest(event.GetMethod(), event.GetPath(), bytes.NewReader(event.GetBody()))
 	if err != nil {
 		return nil, err
@@ -23,7 +24,7 @@ func Handler(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
 	recorder := httptest.NewRecorder()
 	reverseProxy.ServeHTTP(recorder, httpRequest)
 
-	// sending request to sidecar
+	// send request to sidecar
 	context.Logger.InfoWith("Forwarding request to sidecar", "sidecarUrl", sidecarUrl)
 	response := recorder.Result()
 
@@ -45,6 +46,7 @@ func InitContext(context *nuclio.Context) error {
 	sidecarUrl := fmt.Sprintf("%s:%s", sidecarHost, sidecarPort)
 	parsedURL, err := url.Parse(sidecarUrl)
 	if err != nil {
+		context.Logger.ErrorWith("Failed to parse sidecar url", "sidecarUrl", sidecarUrl)
 		return err
 	}
 	reverseProxy := httputil.NewSingleHostReverseProxy(parsedURL)
