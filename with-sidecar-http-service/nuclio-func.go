@@ -1,35 +1,57 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
+	"net/http/httputil"
 	"net/url"
 	"os"
 
 	nuclio "github.com/nuclio/nuclio-sdk-go"
-	"github.com/valyala/fasthttp"
 )
 
 func Handler(context *nuclio.Context, event nuclio.Event) (interface{}, error) {
-	sidecarHost := os.Getenv("SIDECAR_HOST")
-	sidecarPort := os.Getenv("SIDECAR_PORT")
-	// url for request forwarding
-	sidecarUrl, _ := url.JoinPath(fmt.Sprintf("%s:%s", sidecarHost, sidecarPort), event.GetPath())
+	reverseProxy := context.UserData.(map[string]interface{})["reverseProxy"].(*httputil.ReverseProxy)
+	sidecarUrl := context.UserData.(map[string]interface{})["server"].(string)
 
-	// create new request to forward
-	req := fasthttp.AcquireRequest()
-	resp := fasthttp.AcquireResponse()
-
-	// set body and request uri
-	req.SetBody(event.GetBody())
-	req.SetRequestURI(sidecarUrl)
+	httpRequest, err := http.NewRequest(event.GetMethod(), event.GetPath(), bytes.NewReader(event.GetBody()))
+	if err != nil {
+		return nil, err
+	}
+	recorder := httptest.NewRecorder()
+	reverseProxy.ServeHTTP(recorder, httpRequest)
 
 	// sending request to sidecar
 	context.Logger.InfoWith("Forwarding request to sidecar", "sidecarUrl", sidecarUrl)
-	err := fasthttp.Do(req, resp)
+	response := recorder.Result()
 
+	headers := make(map[string]interface{})
+	for key, value := range response.Header {
+		headers[key] = value[0]
+	}
 	return nuclio.Response{
-		StatusCode:  resp.StatusCode(),
-		ContentType: "application/text",
-		Body:        resp.Body(),
-	}, err
+		StatusCode:  response.StatusCode,
+		Body:        recorder.Body.Bytes(),
+		ContentType: response.Header.Get("Content-Type"),
+	}, nil
+}
+
+func InitContext(context *nuclio.Context) error {
+	sidecarHost := os.Getenv("SIDECAR_HOST")
+	sidecarPort := os.Getenv("SIDECAR_PORT")
+	// url for request forwarding
+	sidecarUrl := fmt.Sprintf("%s:%s", sidecarHost, sidecarPort)
+	parsedURL, err := url.Parse(sidecarUrl)
+	if err != nil {
+		return err
+	}
+	reverseProxy := httputil.NewSingleHostReverseProxy(parsedURL)
+
+	context.UserData = map[string]interface{}{
+		"server":       sidecarUrl,
+		"reverseProxy": reverseProxy,
+	}
+	return nil
 }
