@@ -1,0 +1,33 @@
+SidecarHost:
+  displayName: Sidecar host
+  kind: string
+  description: "Sidecar host url"
+  attributes:
+    defaultValue: "http://0.0.0.0"
+SidecarPort:
+  displayName: Sidecar port
+  kind: number
+  description: "Sidecar port"
+  attributes:
+    defaultValue: 1337
+SidecarName:
+  displayName:  Sidecar container name
+  kind: string
+  description: "Sidecar container name"
+  attributes:
+    defaultValue: "sidecar"
+SidecarImage:
+  displayName: Sidecar image
+  kind: string
+  description: "Sidecar image"
+  required: true
+  attributes:
+    defaultValue: ""
+MaxWorkers:
+  displayName: Number of workers
+  kind: number
+  description: "Number of requests to handle concurrently"
+  attributes:
+    defaultValue: 4
+    minValue: 1
+    maxValue: 10000
