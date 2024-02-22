@@ -1,0 +1,48 @@
+apiVersion: "nuclio.io/v1beta1"
+kind: "NuclioFunction"
+metadata:
+  name: eventhub
+spec:
+  description: >
+    An Azure Event Hub triggered function with a configuration that connects to an Azure Event Hub.
+    The function reads messages from two partitions, process the messages, invokes another function,
+    and sends the processed payload to another Azure Event Hub.
+
+  runtime: "golang"
+  handler: main:SensorHandler
+  minReplicas: 1
+  maxReplicas: 1
+  disableDefaultHTTPTrigger: false
+  build:
+    functionSourceCode: {{ .SourceCode }}
+    commands:
+       - apk --update --no-cache add ca-certificates
+  triggers:
+    eventhub:
+      kind: eventhub
+      attributes:
+        sharedAccessKeyName: {{ .SharedAccessKeyName }}
+        sharedAccessKeyValue: {{ .SharedAccessKeyValue }}
+        namespace: {{ .Namespace }}
+        eventHubName: {{ .EventHubName }}
+        consumerGroup: {{ .ConsumerGroup }}
+         # Match event hub partition  number
+        partitions:
+        - 0
+        - 1
+  # Output to another event hub
+  dataBindings:
+    alarmsEventhub:
+      class: eventhub
+      attributes:
+        sharedAccessKeyName: {{ .SharedAccessKeyName }}
+        sharedAccessKeyValue: {{ .SharedAccessKeyValue }}
+        eventHubName: alarms
+        namespace: {{ .Namespace }}
+    enrichedFleetEventhub:
+      class: eventhub
+      attributes:
+        sharedAccessKeyName: {{ .SharedAccessKeyName }}
+        sharedAccessKeyValue: {{ .SharedAccessKeyValue }}
+        eventHubName: enrichedfleet
+        namespace: {{ .Namespace }}
