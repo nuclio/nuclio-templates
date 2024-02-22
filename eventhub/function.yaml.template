@@ -8,8 +8,6 @@ spec:
     The function reads messages from two partitions, process the messages, invokes another function,
     and sends the processed payload to another Azure Event Hub.
 
-  # Note that we're not specifying handler. This is because the Golang runtime
-  # can find handlers automatically.
   runtime: "golang"
   handler: main:SensorHandler
   minReplicas: 1
