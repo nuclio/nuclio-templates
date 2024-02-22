@@ -1,0 +1,25 @@
+SharedAccessKeyName:
+  displayName: Shared Access Key Name
+  kind: string
+  description: "Shared Access Key Name"
+  attributes:
+    defaultValue: ""
+SharedAccessKeyValue:
+  displayName: Shared Access Key Value
+  kind: string
+  description: "Shared Access Key Value"
+  attributes:
+    defaultValue: ""
+Namespace:
+  displayName:  Namespace
+  kind: string
+  description: "Eventhub namespace"
+  attributes:
+    defaultValue: ""
+ConsumerGroup:
+  displayName: Consumer Group
+  kind: string
+  description: "Consumer Group"
+  required: true
+  attributes:
+    defaultValue: ""
