@@ -55,9 +55,7 @@ func InitContext(context *nuclio.Context) error {
 	sidecarPort := os.Getenv("SIDECAR_PORT")
 
 	// enrich sidecar host
-	if sidecarHost == "" {
-		sidecarHost = "http://localhost"
-	} else if !strings.Contains(sidecarHost, "://") {
+	if !strings.Contains(sidecarHost, "://") {
 		sidecarHost = fmt.Sprintf("http://%s", sidecarHost)
 	}
 
